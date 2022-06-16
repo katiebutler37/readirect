@@ -11,31 +11,28 @@
     <title>READirect</title>
 </head>
 <body>
-    <header class="navbar is-fixed-top">
-        <h1 class="navbar-brand title is-1">
+    <header>
+        <h1 class="brand">
             <!-- App brand title split up for styling purposes, set up to reload page on click by linking URL -->
-            <a class="navbar-item" href ="">REA<span id="D">D</span><span id="irect">irect</span></a>
+            <a href ="">READirect</a>
         </h1>
-        <!-- will need to edit this component for screen sizes <1024px becuase of bulma default settings for the navbar glitch with the smaller sizes -->
-        <nav class="navbar-menu is-active">
-            <div class="navbar-end">
+        <nav class="is-grouped">
             <!-- nav heading linked to search history at the bottom of the page -->
-                <a class="navbar-item button is-white is-responsive is-rounded" href="#search-history">My Saved Reviews</a>  
+            <a id="saved-reviews-btn" class="button is-white is-rounded" href="#search-history">My Saved Reviews</a>  
             <!-- search bar aligned to top right corner -->
-                <form class="navbar-item">
-                    <label for="title">Search Title: </label>
-                    <input type="text" placeholder="i.e. Gone Girl" name="title" id="title" class="form-input"/>
-                    <!-- note: can append the "is-loading" class while data is getting fetched and remove it once displayed for a loading circle to replace the magnifying glass -->
-                    <button class="button is-black is-rounded" type="submit">
-                        <!-- insert icon for magnifying glass -->
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                </form>
-            </div>
+            <form>
+                <label for="title">Search Title: </label>
+                <input type="text" placeholder="i.e. Gone Girl" name="title" id="title" class="form-input"/>
+                <!-- note: can append the "is-loading" class while data is getting fetched and remove it once displayed for a loading circle to replace the magnifying glass -->                   
+                <button class="button is-black is-rounded" type="submit">
+                    <!-- insert icon for magnifying glass -->
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
         </nav>
     </header>
 
-    <main class="has-navbar-fixed-top">
+    <main>
         <section id="results">
             <!-- dynamically insert title from input-->
             <p> Displaying results for: <span id="searched-title">Title</span></p>
@@ -157,7 +154,7 @@
       </div>
 
     <footer>
-        <h2 class="subtitle is-five">Made by Fumi, Moshe, Ryan & Katie</h2>
+        <h2>Made by Fumi, Moshe, Ryan & Katie</h2>
         <p>
             &copy; 2022 READirect, Inc.
         </p>

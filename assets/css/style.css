@@ -5,39 +5,46 @@
     --tertiary-color: red;
 }
 
-.navbar {
-    align-items: flex-start;
-    height: 90px;
+header {
+    height: 80px;
     background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    flex-wrap: wrap;
 }
 
-.navbar-brand {
-    margin-bottom: 0;
-    padding-bottom: 0;
-    font-size: 50px;
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    margin: auto 8px 3px 8px;
+}
+
+.brand {
     font-weight: bold;
     font-style: italic;
+    font-size: 40px;
+    margin: 10px;
 }
 
-.navbar-brand a {
+.brand a {
     color: black;
 }
 
-#D {
-    color: rgb(3, 79, 37);
-}
-
-#irect {
-    color: rgb(4, 170, 79);
-}
-
-.navbar-end {
-    align-items: center;
+form {
+    font-size: 20px;
 }
 
 main {
     margin: 10px;
-    margin-top: 140px;
+    margin-top: 40px;
     font-size: 20px;
 }
 
@@ -71,11 +78,14 @@ main {
     margin: 50px;
 }
 
+#search-history {
+    margin-top: 40px;
+}
+
 .search-history-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
-
 }
 .search-history-item {
     background-color: var(--primary-color);
@@ -101,4 +111,39 @@ footer {
     justify-content: space-between;
     padding: 8px;
 }
+
+/* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */
+@media screen and (max-width: 980px) {
+  }
+  
+  /* MEDIA QUERY FOR TABLETS AND SMALLER */
+  @media screen and (max-width: 768px) {
+    #saved-reviews-btn {
+        display: none;
+    }
+    .brand {
+        font-size: 32px;
+    }
+  }
+  
+  /* MEDIA QUERY FOR MOBILE PHONES AND SMALLER */
+  @media screen and (max-width: 575px) {
+    header {
+        display: block;
+        text-align: center;
+        height: fit-content;
+    }
+    #results {
+        font-size: 18px;
+    }
+    #search-history {
+        text-align: center;
+    }
+    #search-history h2 {
+        font-size: 22px;
+    }
+    footer {
+        font-size: 12px;
+    }
+  }
 
