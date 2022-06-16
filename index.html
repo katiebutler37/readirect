@@ -10,27 +10,105 @@
 <body>
     <header>
         <h1>
-
+            <!-- App brand title split up for styling purposes -->
+            <a href ="/">REA<span id="D">D</span><span id="irect">irect</span></a>
         </h1>
         <nav>
-            <a></a>
+            <!-- nav heading linked to search history at the bottom of the page -->
+            <a href="#search-history">My Saved Reviews</a>
+            <!-- search bar aligned to top right corner -->
             <form>
-                <input />
-                <button>
-
+                <label for="title">Search Title:</label>
+                <input type="text" placeholder="i.e. Gone Girl" name="title" id="title" class="form-input"/>
+                <button type="submit">
+                    <!-- insert icon for magnifying glass -->
                 </button>
             </form>
         </nav>
     </header>
 
     <main>
-        <article>
+        <section>
+            <!-- dynamically insert title from input-->
+            <p> Displaying results for: <span id="searched-title">Title</span></p>
+            <button id="save-btn">Save Review</button>
+        </section>
 
-        </article>
-        <article>
-
-        </article>
+        <!-- hardcoded card container and card content to be replaced with js appended data -->
+        <div>
+            <!-- book review card -->
+            <article class="card">
+                <h3 class="displayed-title">Gone Girl</h3>
+                <img class="cover" src="./images/placeholder.jpg" />
+                <!-- insert appropriate icons to display rating info -->
+                <div class="star-rating"></div>
+                <div class="top-reviews">
+                    <p>"Worth the read!" -Linda</p>
+                    <p>"What a page turner! Couldn't put it down. Finished it in only 2 days. Would definitely recommend." -Thomas</p>
+                    <p>"Irrestible, suspenseful, shocking. If you love a good murder mystery, Gone Girl is for you." -Heather</p>
+                </div>
+                <!-- link to respective review page on goodreads site through URL endpoint -->
+                <a>Read more reviews</a>
+            </article>
+              <!-- movie review card -->
+              <article class="card">
+                <h3 class="displayed-title">Gone Girl</h3>
+                <img class="cover" src="./images/placeholder.jpg" />
+                <!-- insert appropriate icons to display rating info -->
+                <div class="tomato-rating"></div>
+                <div class="top-reviews">
+                    <p>"Worth the watch!" -Jared</p>
+                    <p>"What a movie! I was on the edge of my seat the whole 2 hours. Would definitely recommend if you're looking for some chaotic energy. It's an unpredictable emotional rollercoaster." -Mohammed</p>
+                    <p>"Irrestible, suspenseful, shocking. If you love a good murder mystery, Gone Girl is for you." -Paige</p>
+                </div>
+                <!-- link to respective review page on rotten tomatoes site through URL endpoint -->
+                <a>Read more reviews</a>
+            </article>
+            
+        </div>
+        <section id="search-history">
+            <h2>My Saved Reviews</h2>
+            <!-- flexbox wrapper to hold searched titles organized according to the mockup -->
+            <div>
+                <div class="search-history-item"></div>
+                <div class="search-history-item"></div>
+                <div class="search-history-item"></div>
+                <div class="search-history-item"></div>
+                <div class="search-history-item"></div>
+                <div class="search-history-item"></div>
+            </div>
+        </section>
+      
     </main>
+
+    <!-- MODALS for error handling linked to function that triggers display(since not allowed to use dom alerts) -->
+    <div class="search-error-modal hide">
+        <p>Your search did not match any documents.</p>
+        <p>Suggestions:</p>
+        <ul>
+            <li>
+                Make sure that all words are spelled correctly.
+            </li>
+            <li>
+                Try different keywords.
+            </li>
+            <li>
+                Try more general keywords.
+            </li>
+        </ul>
+        <!-- link to function to return display to none through "hide" class & reset page content on click-->
+        <button class="confirm-error-btn">
+            OK
+        </button>
+    </div>
+
+    <div class="server-error-modal hide">
+        <p>Error: Unable to connect to the server at this time. Please try again later.</p>
+        <!-- link to function to return display to none through "hide" class & reset page content on click-->
+        <button class="confirm-error-btn">
+            OK
+        </button>
+    </div>
 
     <footer>
         <h2>Made by Fumi, Moshe, Ryan & Katie</h2>
@@ -38,7 +116,7 @@
             &copy; 2022 READirect, Inc.
         </p>
     </footer>
-    
+
     <!-- linked to javascript files -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>"
     <script src="./assets/js/script.js"></script>
