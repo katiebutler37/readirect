@@ -4,10 +4,164 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- links to font awesome kit containing icons for faster loading -->
+    <script src="https://kit.fontawesome.com/003f026d41.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-    <title>Document</title>
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>READirect</title>
 </head>
 <body>
-    
+    <header>
+        <h1 class="brand">
+            <!-- App brand title split up for styling purposes, set up to reload page on click by linking URL -->
+            <a href ="">READirect</a>
+        </h1>
+        <nav class="is-grouped">
+            <!-- nav heading linked to search history at the bottom of the page -->
+            <a id="saved-reviews-btn" class="button is-white is-rounded" href="#search-history">My Saved Reviews</a>  
+            <!-- search bar aligned to top right corner -->
+            <form>
+                <label for="title">Search Title: </label>
+                <input type="text" placeholder="i.e. Gone Girl" name="title" id="title" class="form-input"/>
+                <!-- note: can append the "is-loading" class while data is getting fetched and remove it once displayed for a loading circle to replace the magnifying glass -->                   
+                <button class="button is-black is-rounded" type="submit">
+                    <!-- insert icon for magnifying glass -->
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        <section id="results">
+            <!-- dynamically insert title from input-->
+            <p> Displaying results for: <span id="searched-title">Title</span></p>
+            <button id="save-btn" class="button is-success is-responsive is-rounded is-medium"><i class="fa-solid fa-check"></i>Save Review</button>
+        </section>
+
+        <!-- hardcoded card container and card content to be replaced with js appended data -->
+        <!-- Responsiveness: Bulma's styling includes default column stacking at full width for any screensize less than tablets-->
+        <div class="columns">
+            <!-- book review card -->
+            <div class="column">
+                <div class="card-container">
+                    <h3 class="subtitle is-four">Book Results</h3>
+                    <article class="card">
+                        <div class="img-container">
+                            <figure class="card-image is-2by3">
+                                <img class="cover" src="./images/placeholder.jpg" />
+                            </figure>    
+                        </div>
+                        <div class="card-content">
+                            <h3 class="displayed-title title">Gone Girl</h3>
+                            <!-- insert appropriate icons to display rating info (see if there is an icon endpoint, otherwise will have to code conditional statements to translate the rating number into icons) -->
+                            <div class="star-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-regular fa-star"></i>
+                            </div>
+                            <div class="top-reviews">
+                                <p class="block">"Worth the read!" -Linda</p>
+                                <p class="block">"What a page turner! Couldn't put it down. Finished it in only 2 days. Would definitely recommend." -Thomas</p>
+                                <p class="block">"Irrestible, suspenseful, shocking. If you love a good murder mystery, Gone Girl is for you." -Heather</p>
+                            </div>
+                            <br>
+                            <!-- link to respective review page on goodreads site through URL endpoint -->
+                            <a class="button is-rounded is-link is-responsive">Read more reviews</a>
+                        </div>    
+                    </article> 
+                </div>    
+            </div>
+              <!-- movie review card -->
+              <div class=" column">
+                <div class="card-container">
+                <h3 class="subtitle is-four">Movie Results</h3>
+                <article class="card">
+                    <div class="img-container">
+                        <figure class="card-image is-2by3">
+                            <img class="cover" src="./images/placeholder.jpg" />
+                        </figure>    
+                    </div>
+                    <div class="card-content">
+                        <h3 class="displayed-title title">Gone Girl</h3>
+                        <!-- insert appropriate icons to display rating info (see if there is an icon endpoint, otherwise will have to code conditional statements to translate the rating number into icons) -->
+                        <div class="star-rating">
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-solid fa-star"></i>
+                            <i class="fa-regular fa-star"></i>
+                        </div>
+                        <div class="top-reviews">
+                            <p class="block">"Worth the watch!" -Jared</p>
+                            <p class="block">"What a movie! I was on the edge of my seat the whole 2 hours. Would definitely recommend if you're looking for some chaotic energy. It's an unpredictable emotional rollercoaster." -Mohammed</p>
+                            <p class="block">"Irresistible, suspenseful, shocking. If you love a good murder mystery, Gone Girl is for you." -Paige</p>
+                        </div>
+                        <br>
+                        <!-- link to respective review page on goodreads site through URL endpoint -->
+                        <a class="button is-rounded is-link is-responsive">Read more reviews</a>
+                    </div>
+                </article> 
+                </div>
+            </div> 
+        </div>
+        <section id="search-history">
+            <h2 class="title is-2">My Saved Reviews</h2>
+            <!-- flexbox wrapper to hold searched titles organized according to the mockup -->
+            <div class="search-history-items">
+                <button class="button is-rounded search-history-item">Twilight</button>
+                <button class="button is-rounded search-history-item">Percy Jackson</button>
+                <button class="button is-rounded search-history-item">Harry Potter</button>
+                <button class="button is-rounded search-history-item">Pride and Prejudice</button>
+                <button class="button is-rounded search-history-item">Little Women</button>
+                <button class="button is-rounded search-history-item">Crazy Rich Asians</button>
+            </div>
+        </section>
+      
+    </main>
+
+    <!-- MODALS for error handling linked to function that triggers display(since not allowed to use dom alerts) -->
+    <!-- to trigger display of modal add the "is-active class to the .modal container" -->
+    <div id="search-error" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p>Your search did not match any documents.</p>
+            <br>
+            <p>Suggestions:</p>
+            <ul>
+                <li>
+                    Make sure that all words are spelled correctly.
+                </li>
+                <li>
+                    Try different keywords.
+                </li>
+                <li>
+                    Try more general keywords.
+                </li>
+            </ul>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+
+      <div id="server-error" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p>Error: Unable to connect to the server at this time. Please try again later.</p>
+        </div>
+        <button class="modal-close is-large" aria-label="close"></button>
+      </div>
+
+    <footer>
+        <h2>Made by Fumi, Moshe, Ryan & Katie</h2>
+        <p>
+            &copy; 2022 READirect, Inc.
+        </p>
+    </footer>
+
+    <!-- linked to javascript files -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./assets/js/script.js"></script>
 </body>
 </html>
