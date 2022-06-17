@@ -1,0 +1,149 @@
+:root {
+    /* switch out for decided on colour palette */
+    --primary-color: rgb(224, 221, 221);
+    --secondary-color: black;
+    --tertiary-color: red;
+}
+
+header {
+    height: 80px;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 9999;
+    flex-wrap: wrap;
+}
+
+nav {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    margin: auto 8px 3px 8px;
+}
+
+.brand {
+    font-weight: bold;
+    font-style: italic;
+    font-size: 40px;
+    margin: 10px;
+}
+
+.brand a {
+    color: black;
+}
+
+form {
+    font-size: 20px;
+}
+
+main {
+    margin: 10px;
+    margin-top: 40px;
+    font-size: 20px;
+}
+
+#results {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: auto 30px auto 30px;
+    font-size: 26px;
+}
+.fa-check {
+    margin: 4px;
+}
+
+.card-container {
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.card {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.img-container {
+    margin: 50px;
+}
+
+#search-history {
+    margin-top: 40px;
+}
+
+.search-history-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.search-history-item {
+    background-color: var(--primary-color);
+    margin: 8px;
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    max-width: 200px;
+}
+
+.modal-content {
+    background-color: var(--primary-color);
+    padding: 50px;
+    border-radius: 5px;
+    font-size: larger;
+}
+
+footer {
+    margin-top: 70px;
+    background-color: var(--primary-color);
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+}
+
+/* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */
+@media screen and (max-width: 980px) {
+  }
+  
+  /* MEDIA QUERY FOR TABLETS AND SMALLER */
+  @media screen and (max-width: 768px) {
+    #saved-reviews-btn {
+        display: none;
+    }
+    .brand {
+        font-size: 32px;
+    }
+  }
+  
+  /* MEDIA QUERY FOR MOBILE PHONES AND SMALLER */
+  @media screen and (max-width: 575px) {
+    header {
+        display: block;
+        text-align: center;
+        height: fit-content;
+    }
+    #results {
+        font-size: 18px;
+    }
+    #search-history {
+        text-align: center;
+    }
+    #search-history h2 {
+        font-size: 22px;
+    }
+    footer {
+        font-size: 12px;
+    }
+  }
+
