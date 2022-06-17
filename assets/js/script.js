@@ -8,20 +8,20 @@ const options = {
 	}
 };
 
+
 // Our search title function
-var searchTitle = function(search){
-    fetch('https://mdblist.p.rapidapi.com/?m=true&s=Batman', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
+var searchTitle = function(){
+    var batmanMovie = "batman";
+    fetch("https://mdblist.p.rapidapi.com/?m=true&s=" + batmanMovie, options)
+	.then(data => data.json())
+	.then(data => console.log(data.search[0].score))
 	.catch(err => console.error(err));
 }
 
 // searchTitle();
 
-
 // our example payload
-var results =
-{
+var results = {
     "id": "tt2313197",
     "title": "Batman: The Dark Knight Returns, Part 1",
     "year": 2012,
