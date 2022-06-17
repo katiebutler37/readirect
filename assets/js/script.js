@@ -48,11 +48,11 @@ function searchTitle(title) {
     console.log(moviePayload);
 	// .catch(err => console.error(err));
     
-    fetch(bookFetchString)
-	.then(data => data.json())
-	.then(data => console.log(data.items[0].volumeInfo))
-    // console.log(bookPayload);
-	.catch(err => console.error(err));
+    // fetch(bookFetchString)
+	// .then(data => data.json())
+	// .then(data => console.log(data.items[0].volumeInfo))
+    console.log(bookPayload);
+	// .catch(err => console.error(err));
 
 
 }
