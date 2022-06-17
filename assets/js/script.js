@@ -16,35 +16,7 @@ const bookPayload = {
     readingModes: {text: false, image: false}
 }
 
-// fetch('https://www.googleapis.com/books/v1/volumes?q=the+alchemist')
-//   .then(response => response.json())
-//   .then(data => console.log(data.items[0].volumeInfo));
-
-console.log(bookPayload);
-// This will store our credentials
-
-const options = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': '67aa50c69bmsha26ae12f76ef7b7p1338d8jsnc6b5612e39cc',
-		'X-RapidAPI-Host': 'mdblist.p.rapidapi.com'
-	}
-};
-
-
-// Our search title function
-var searchTitle = function(){
-    var batmanMovie = "batman";
-    fetch("https://mdblist.p.rapidapi.com/?m=true&s=" + batmanMovie, options)
-	.then(data => data.json())
-	.then(data => console.log(data.search[0].score))
-	.catch(err => console.error(err));
-}
-
-// searchTitle();
-
-// our example payload
-var results = {
+const moviePayload = {
     "id": "tt2313197",
     "title": "Batman: The Dark Knight Returns, Part 1",
     "year": 2012,
@@ -55,8 +27,42 @@ var results = {
     "traktid": 84956
 };
 
+const mdblistOptions = {
+	method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': '67aa50c69bmsha26ae12f76ef7b7p1338d8jsnc6b5612e39cc',
+		'X-RapidAPI-Host': 'mdblist.p.rapidapi.com'
+	}
+};
+
+function searchTitle(title) {
+    const movieFetchString = "https://mdblist.p.rapidapi.com/?m=true&s=" + title;
+    const bookFetchString = "https://www.googleapis.com/books/v1/volumes?q=" + title;
+
+    fetch(movieFetchString, mdblistOptions)
+	.then(data => data.json())
+	// .then(data => console.log(data.search[0]))
+    .then(() => {console.log(moviePayload)})
+	.catch(err => console.error(err));
+    
+    fetch(bookFetchString)
+	.then(data => data.json())
+	// .then(data => console.log(data.items[0].volumeInfo))
+    .then(() => {console.log(bookPayload)})
+	.catch(err => console.error(err));
+}
+
+searchTitle("batman");
 
 
-console.log(results);
+
+
+
+
+
+
+
+
+
 
 
