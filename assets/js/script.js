@@ -15,7 +15,8 @@ const bookPayload = {
     previewLink: 'http://books.google.ca/books?id=qUI8pbpCNJUC&printsec=frontcover&dq=A+Clockwork+Orange&hl=&cd=1&source=gbs_api',
     printType: 'BOOK',
     publishedDate: '2011-08-04',
-    publisher: 'Penguin UK'    
+    publisher: 'Penguin UK',
+    title: 'A Clockwork Orange'
 }
 
 const moviePayload = {
@@ -47,11 +48,11 @@ function searchTitle(title) {
     console.log(moviePayload);
 	// .catch(err => console.error(err));
     
-    // fetch(bookFetchString)
-	// .then(data => data.json())
-	// .then(data => console.log(data.items[0].volumeInfo))
-    console.log(bookPayload);
-	// .catch(err => console.error(err));
+    fetch(bookFetchString)
+	.then(data => data.json())
+	.then(data => console.log(data.items[0].volumeInfo))
+    // console.log(bookPayload);
+	.catch(err => console.error(err));
 
 
 }
