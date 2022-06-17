@@ -39,17 +39,19 @@ function searchTitle(title) {
     const movieFetchString = "https://mdblist.p.rapidapi.com/?m=true&s=" + title;
     const bookFetchString = "https://www.googleapis.com/books/v1/volumes?q=" + title;
 
-    fetch(movieFetchString, mdblistOptions)
-	.then(data => data.json())
+    // fetch(movieFetchString, mdblistOptions)
+	// .then(data => data.json())
 	// .then(data => console.log(data.search[0]))
-    .then(() => {console.log(moviePayload)})
-	.catch(err => console.error(err));
+    console.log(moviePayload);
+	// .catch(err => console.error(err));
     
-    fetch(bookFetchString)
-	.then(data => data.json())
+    // fetch(bookFetchString)
+	// .then(data => data.json())
 	// .then(data => console.log(data.items[0].volumeInfo))
-    .then(() => {console.log(bookPayload)})
-	.catch(err => console.error(err));
+    console.log(bookPayload);
+	// .catch(err => console.error(err));
+
+
 }
 
 searchTitle("batman");
