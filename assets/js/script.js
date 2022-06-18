@@ -1,3 +1,5 @@
+const DEBUG = true;
+
 const bookPayload = {
     allowAnonLogging: true,
     authors: ['Anthony Burgess'],
@@ -20,41 +22,81 @@ const bookPayload = {
 }
 
 const moviePayload = {
-    id: 'tt0066921',
-    imdbid: 'tt0066921',
-    score: 79,
-    title: 'A Clockwork Orange',
-    tmdbid: 185,
-    traktid: 149,
-    type: 'movie',
-    year: 1971
+    Actors: "Malcolm McDowell, Patrick Magee, Michael Bates",
+    Awards: "Nominated for 4 Oscars. 12 wins & 24 nominations total",
+    BoxOffice: "$26,617,553",
+    Country: "United Kingdom, United States",
+    DVD: "23 Oct 2007",
+    Director: "Stanley Kubrick",
+    Genre: "Crime, Sci-Fi",
+    Language: "English",
+    Metascore: "77",
+    Plot: "In the future, a sadistic gang leader is imprisoned and volunteers for a conduct-aversion experiment, but it doesn't go as planned.",
+    Poster: "https://m.media-amazon.com/images/M/MV5BMTY3MjM1Mzc4N15BMl5BanBnXkFtZTgwODM0NzAxMDE@._V1_SX300.jpg",
+    Production: "N/A",
+    Rated: "X",
+    Ratings: [
+        {
+            Source: 'Internet Movie Database',
+            Value: '8.3/10'
+        },
+        {
+            Source: 'Rotten Tomatoes',
+            Value: '87%'
+        },
+        {
+            Source: 'Metacritic',
+            Value: '77/100'
+        }
+    ],
+    Released: "02 Feb 1972",
+    Response: "True",
+    Runtime: "136 min",
+    Title: "A Clockwork Orange",
+    Type: "movie",
+    Website: "N/A",
+    Writer: "Stanley Kubrick, Anthony Burgess",
+    Year: "1971",
+    imdbID: "tt0066921",
+    imdbRating: "8.3",
+    imdbVotes: "810,908"
 };
 
-const mdblistOptions = {
+const movieOptions = {
 	method: 'GET',
 	headers: {
-		'X-RapidAPI-Key': '67aa50c69bmsha26ae12f76ef7b7p1338d8jsnc6b5612e39cc',
-		'X-RapidAPI-Host': 'mdblist.p.rapidapi.com'
+		'X-RapidAPI-Key': 'fc6b69c0damshf39a0c0e95d5241p10963bjsn7774c35cda52',
+		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
 	}
 };
 
 function searchTitle(title) {
-    const movieFetchString = "https://mdblist.p.rapidapi.com/?m=true&s=" + title;
-    const bookFetchString = "https://www.googleapis.com/books/v1/volumes?q=" + title;
+    const movieFetchString = `https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`;
+    const bookFetchString = `https://www.googleapis.com/books/v1/volumes?q=${title}`
 
-    // fetch(movieFetchString, mdblistOptions)
-	// .then(data => data.json())
-	// .then(data => console.log(data.search[0]))
-    console.log(moviePayload);
-	// .catch(err => console.error(err));
-    
-    // fetch(bookFetchString)
-	// .then(data => data.json())
-	// .then(data => console.log(data.items[0].volumeInfo))
-    console.log(bookPayload);
-	// .catch(err => console.error(err));
+    if (DEBUG) {
+        // Do stuff with mock payloads
+        console.log(moviePayload);
+        console.log(bookPayload);
+    }
+    else {
+        // Do stuff with real payloads
+        fetch(movieFetchString, movieOptions)
+        .then(data => data.json())
+        .then(data => {
+            const id = data.Search[0].imdbID;
+            fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${id}`, movieOptions)
+            .then(response => response.json())
+            .then(response => console.log(response))
+            .catch(err => console.error(err));
+        })
+        .catch(err => console.error(err))
 
-
+        fetch(bookFetchString)
+	    .then(data => data.json())
+	    .then(data => console.log(data.items[0].volumeInfo))
+	    .catch(err => console.error(err));
+    }
 }
 
 searchTitle("A Clockwork Orange");
