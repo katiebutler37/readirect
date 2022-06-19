@@ -1,7 +1,11 @@
 // Our Movie card variables which will hold the fetched data
-var movieTitle = document.querySelector(".movie-title");
-var movieRatings = document.querySelector(".movie-ratings");
 var movieCover = document.querySelector(".movie-cover");
+var movieTitle = document.querySelector(".movie-title");
+var movieAwards = document.querySelector(".movie-awards");
+var movieRating1 = document.getElementById("movie-rating-1");
+var movieRating2 = document.getElementById("movie-rating-2");
+var movieRating3 = document.getElementById("movie-rating-3");
+
 
 const DEBUG = true;
 
@@ -105,7 +109,10 @@ function searchTitle(title) {
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
     movieTitle.textContent = results.Title;
-    // movieRatings.textContent = results.Ratings[0].Source + " " + results.Ratings[0].Value;
+    movieAwards.textContent = "Awards: " + results.Awards;
+    movieRating1.textContent = results.Ratings[0].Source + " " + results.Ratings[0].Value;
+    movieRating2.textContent = results.Ratings[1].Source + " " + results.Ratings[1].Value;
+    movieRating3.textContent = results.Ratings[2].Source + " " + results.Ratings[2].Value;
     
 }
 
