@@ -1,3 +1,8 @@
+// Our Movie card variables which will hold the fetched data
+var movieTitle = document.querySelector(".movie-title");
+var movieRatings = document.querySelector(".movie-ratings");
+var movieCover = document.querySelector(".movie-cover");
+
 const DEBUG = true;
 
 const bookPayload = {
@@ -74,12 +79,11 @@ function searchTitle(title) {
     const movieFetchString = `https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`;
     const bookFetchString = `https://www.googleapis.com/books/v1/volumes?q=${title}`
 
-    if (DEBUG) {
-        // Do stuff with mock payloads
-        console.log(moviePayload);
-        console.log(bookPayload);
-    }
-    else {
+    // if (DEBUG) {
+    //     // Do stuff with mock payloads
+    //     console.log(moviePayload);
+    //     console.log(bookPayload);
+    // }
         // Do stuff with real payloads
         fetch(movieFetchString, movieOptions)
         .then(data => data.json())
@@ -87,7 +91,7 @@ function searchTitle(title) {
             const id = data.Search[0].imdbID;
             fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${id}`, movieOptions)
             .then(response => response.json())
-            .then(response => console.log(response))
+            .then(results => movieResults(results))
             .catch(err => console.error(err));
         })
         .catch(err => console.error(err))
@@ -96,10 +100,16 @@ function searchTitle(title) {
 	    .then(data => data.json())
 	    .then(data => console.log(data.items[0].volumeInfo))
 	    .catch(err => console.error(err));
-    }
 }
 
-searchTitle("A Clockwork Orange");
+var movieResults = function (results){
+    movieCover.setAttribute("src", results.Poster);
+    movieTitle.textContent = results.Title;
+    // movieRatings.textContent = results.Ratings[0].Source + " " + results.Ratings[0].Value;
+    
+}
+
+searchTitle("Mission Impossible");
 
 
 
