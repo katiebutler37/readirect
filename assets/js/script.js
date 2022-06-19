@@ -1,10 +1,10 @@
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
 var movieTitle = document.querySelector(".movie-title");
-var movieAwards = document.querySelector(".movie-awards");
-var movieRating1 = document.getElementById("movie-rating-1");
-var movieRating2 = document.getElementById("movie-rating-2");
-var movieRating3 = document.getElementById("movie-rating-3");
+var movieRating = document.querySelector(".movie-rating");
+var movieReview1 = document.getElementById("movie-review-1");
+var movieReview2 = document.getElementById("movie-review-2");
+var movieReview3 = document.getElementById("movie-review-3");
 
 
 const DEBUG = true;
@@ -109,14 +109,29 @@ function searchTitle(title) {
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
     movieTitle.textContent = results.Title;
-    movieAwards.textContent = "Awards: " + results.Awards;
-    movieRating1.textContent = results.Ratings[0].Source + " " + results.Ratings[0].Value;
-    movieRating2.textContent = results.Ratings[1].Source + " " + results.Ratings[1].Value;
-    movieRating3.textContent = results.Ratings[2].Source + " " + results.Ratings[2].Value;
+    // this is our Star rating system based on the MetaScore
+    if (results.Metascore <= 20){
+        movieRating.textContent = "⭐";
+    }
+    if (results.Metascore > 20 && results.Metascore <= 40){
+        movieRating.textContent = "⭐⭐";
+    }
+    if (results.Metascore > 40 && results.Metascore <= 60){
+        movieRating.textContent = "⭐⭐⭐";
+    }
+    if (results.Metascore > 60 && results.Metascore <= 80){
+        movieRating.textContent = "⭐⭐⭐⭐";
+    }
+    if (results.Metascore > 80 && results.Metascore <= 100){
+        movieRating.textContent = "⭐⭐⭐⭐⭐";
+    }
+    movieReview1.textContent = results.Ratings[0].Source + " " + results.Ratings[0].Value;
+    movieReview2.textContent = results.Ratings[1].Source + " " + results.Ratings[1].Value;
+    movieReview3.textContent = results.Ratings[2].Source + " " + results.Ratings[2].Value;
     
 }
 
-searchTitle("Mission Impossible");
+searchTitle("get smart");
 
 
 
