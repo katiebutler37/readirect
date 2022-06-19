@@ -125,13 +125,13 @@ var movieResults = function (results){
     if (results.Metascore > 80 && results.Metascore <= 100){
         movieRating.textContent = "⭐⭐⭐⭐⭐";
     }
-    movieReview1.textContent = results.Ratings[0].Source + " " + results.Ratings[0].Value;
-    movieReview2.textContent = results.Ratings[1].Source + " " + results.Ratings[1].Value;
-    movieReview3.textContent = results.Ratings[2].Source + " " + results.Ratings[2].Value;
+    movieReview1.textContent = results.Ratings[0].Source + " (IMDB) | " + results.Ratings[0].Value;
+    movieReview2.textContent = results.Ratings[1].Source + " | " + results.Ratings[1].Value;
+    movieReview3.textContent = results.Ratings[2].Source + " | " + results.Ratings[2].Value;
     
 }
 
-searchTitle("get smart");
+searchTitle("oxygen");
 
 
 
