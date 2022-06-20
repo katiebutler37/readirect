@@ -14,16 +14,10 @@ var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
 
-<<<<<<< HEAD
-var searchFormEl = document.querySelector("#searchForm");
-var titleInputEl = document.querySelector("#title");
-var searchHistoryContainerEl = document.querySelector('.search-history-items')
-=======
 var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
 var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
->>>>>>> ac3de6ac652d477dbea73f13a51ce7079b46a493
 
 const bookPayload = {
     allowAnonLogging: true,
@@ -232,7 +226,6 @@ var bookResults = function (results){
 
 }
 
-<<<<<<< HEAD
 searchTitle("a clockwork orange");
 
 
@@ -294,10 +287,8 @@ var displaySearchHistory = function() {
 
 //displays on load of page
 displaySearchHistory();
-=======
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
->>>>>>> ac3de6ac652d477dbea73f13a51ce7079b46a493
 
 //add event listener to search history items
 // searchedCityButtonEl.addEventListener("click", buttonClickHandler)
