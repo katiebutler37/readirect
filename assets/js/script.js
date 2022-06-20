@@ -128,7 +128,8 @@ function searchTitle(title) {
 
         fetch(bookFetchString)
 	    .then(data => data.json())
-	    .then(data => bookResults(data.items[0].volumeInfo)) //would like to also call the display results title here, unfamiliar with the arrow syntax, requesting help
+	    .then(data => bookResults(data.items[0].volumeInfo))
+        .then(() => displayResultsTitle())
 	    .catch(err => console.error(err));
 }
 
@@ -146,7 +147,7 @@ resultsContainerEl.innerHTML = "";
  };
  var displayTitle = titleArray.join(" ");
 
- searchedTitleEl.innerHTML = "Displaying results for" + displayTitle;
+ searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
  resultsContainerEl.appendChild(searchedTitleEl);
 
  //may want load local storage array, push into array, and set updated search history array to local storage here
@@ -210,8 +211,6 @@ var bookResults = function (results){
     }
 
 }
-//temporary hardcode
-searchTitle("a clockwork orange");
 
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
