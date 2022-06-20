@@ -289,18 +289,3 @@ var displaySearchHistory = function() {
 displaySearchHistory();
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
-
-//add event listener to search history items
-// searchedCityButtonEl.addEventListener("click", buttonClickHandler)
-
- // add event listeners to forms
-searchFormEl.addEventListener('submit', formSubmitHandler);
-
-
-
-
-
-
-
-
-
