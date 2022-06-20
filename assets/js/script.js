@@ -128,7 +128,7 @@ function searchTitle(title) {
 
         fetch(bookFetchString)
 	    .then(data => data.json())
-	    .then(data => bookResults(data.items[0].volumeInfo)) //would like to also call the display results title here
+	    .then(data => bookResults(data.items[0].volumeInfo)) //would like to also call the display results title here, unfamiliar with the arrow syntax, requesting help
 	    .catch(err => console.error(err));
 }
 
@@ -148,6 +148,8 @@ resultsContainerEl.innerHTML = "";
 
  searchedTitleEl.innerHTML = "Displaying results for" + displayTitle;
  resultsContainerEl.appendChild(searchedTitleEl);
+
+ //may want load local storage array, push into array, and set updated search history array to local storage here
 
  //dynamically create save button here, add the necessary styling classes and also append to the results container
    var saveReviewButtonEl = document.createElement("button");
