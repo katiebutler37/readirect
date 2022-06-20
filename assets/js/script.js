@@ -1,5 +1,5 @@
 // Switch this to false when you want to use real fetching, true when you want to use the mock payloads
-const DEBUG = true;
+const DEBUG = false;
 
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
@@ -103,34 +103,46 @@ var formSubmitHandler = function(event) {
         //needs to be replaced with function to trigger a modal later
       alert('Please enter a title');
     }
-  };
+};
+
+async function fetchMovieData(title) {
+
+    let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
+    let initialData = await initialResponse.json();
+
+    let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
+    let finalData = await finalResponse.json();
+
+    return finalData;
+}
+
+async function fetchBookData(title) {
+    
+    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
+    let data = await response.json();
+
+    return data.items[0].volumeInfo;
+     
+}
 
 function searchTitle(title) {
-    const movieFetchString = `https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`;
-    const bookFetchString = `https://www.googleapis.com/books/v1/volumes?q=${title}`
 
     if (DEBUG) {
         // Do stuff with mock payloads
         movieResults(moviePayload);
         bookResults(bookPayload);
     }
-        // Do stuff with real payloads
-        fetch(movieFetchString, movieOptions)
-        .then(data => data.json())
-        .then(data => {
-            const id = data.Search[0].imdbID;
-            fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${id}`, movieOptions)
-            .then(response => response.json())
-            .then(results => movieResults(results))
-            .catch(err => console.error(err));
-        })
-        .catch(err => console.error(err))
+    else {
+        // Do stuff with real payloads in sequence
+        fetchMovieData(title)
+            .then((data) => movieResults(data))
+            .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
+                fetchBookData(title)
+                .then((data) => bookResults(data))
+            })
+            .then(() => displayResultsTitle())
+    }
 
-        fetch(bookFetchString)
-	    .then(data => data.json())
-	    .then(data => bookResults(data.items[0].volumeInfo))
-        .then(() => displayResultsTitle())
-	    .catch(err => console.error(err));
 }
 
 
@@ -185,6 +197,7 @@ var movieResults = function (results){
     movieReview2.textContent = results.Ratings[1].Source + " | " + results.Ratings[1].Value;
     movieReview3.textContent = results.Ratings[2].Source + " | " + results.Ratings[2].Value;
     
+    return results;
 }
 
 var bookResults = function (results){
