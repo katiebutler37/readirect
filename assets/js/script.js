@@ -140,6 +140,7 @@ function searchTitle(title) {
                 fetchBookData(title)
                 .then((data) => bookResults(data))
             })
+            .then(() => displayResultsTitle())
     }
 
 }
