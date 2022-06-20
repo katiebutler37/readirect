@@ -18,6 +18,7 @@ var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
 var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
+var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
 const bookPayload = {
     allowAnonLogging: true,
@@ -103,6 +104,8 @@ var formSubmitHandler = function(event) {
         //needs to be replaced with function to trigger a modal later
       alert('Please enter a title');
     }
+
+    
 };
 
 async function fetchMovieData(title) {
@@ -147,30 +150,38 @@ function searchTitle(title) {
 
 
 var displayResultsTitle = function (){
-//clear old display content
-resultsContainerEl.innerHTML = "";
+    //clear old display content
+    resultsContainerEl.innerHTML = "";
 
- // get value from input element
- var title = titleInputEl.value.trim();
+    // get value from input element
+    var title = titleInputEl.value.trim();
 
- var titleArray = title.split(" ");
- for (var i=0; i < titleArray.length; i++) {
-     titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
- };
- var displayTitle = titleArray.join(" ");
+    var titleArray = title.split(" ");
+    for (var i=0; i < titleArray.length; i++) {
+        titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
+    };
+    var displayTitle = titleArray.join(" ");
 
- searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
- resultsContainerEl.appendChild(searchedTitleEl);
+    searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
+    resultsContainerEl.appendChild(searchedTitleEl);
 
- //may want load local storage array, push into array, and set updated search history array to local storage here
+   //may want load local storage array, push into array, and set updated search history array to local storage here
 
- //dynamically create save button here, add the necessary styling classes and also append to the results container
+   //dynamically create save button here, add the necessary styling classes and also append to the results container
    var saveReviewButtonEl = document.createElement("button");
    saveReviewButtonEl.classList = "button is-success is-responsive is-rounded is-medium";
    saveReviewButtonEl.setAttribute("id", "save-btn");
    saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
    //append to results container
    resultsContainerEl.appendChild(saveReviewButtonEl);
+
+    //load searchedCities (an array) from localStorage and turn strings back to objects
+    var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
+    //add the individal cityTitle item to the array of searched cities
+    searchedTitles.push(displayTitle);
+    //add updated array to local storage
+    localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+    displaySearchHistory();
 }
 
 
@@ -225,42 +236,6 @@ var bookResults = function (results){
     }
 
 }
-
-searchTitle("a clockwork orange");
-
-
-// get value from input element
-
-var formSubmitHandler = function(event){
-    //if we don't have it form refresh too much
-    event.preventDefault();
-
-    var title = titleInputEl.value.trim();
-
-    var titleArray = title.split(" ");
-    for (var i=0; i < titleArray.length; i++) {
-        titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
-    };
-
-    var correctedTitle = titleArray.join(" ");
-
-    // NOT PUTTING ON THE PAGE YET
-    // cityTitleEl.innerHTML = "<h2>" + correctedTitle + "</h2>";
-    // currentWeatherContainerEl.appendChild(cityTitleEl);
-
-        //load searchedCities (an array) from localStorage and turn strings back to objects
-        var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
-        //add the individal cityTitle item to the array of searched cities
-        searchedTitles.push(correctedTitle);
-        //add updated array to local storage
-        localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
-        displaySearchHistory();
-
-}
-
-// var searchedTitleButtonEl = document.querySelector("#search-history-items");
-
-
 
 var displaySearchHistory = function() {
     if (localStorage.length > 0) {
