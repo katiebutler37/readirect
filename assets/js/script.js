@@ -14,6 +14,10 @@ var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
 
+var searchFormEl = document.querySelector("#searchForm");
+var titleInputEl = document.querySelector("#title");
+var searchHistoryContainerEl = document.querySelector('.search-history-items')
+
 const bookPayload = {
     allowAnonLogging: true,
     authors: ['Anthony Burgess'],
@@ -164,8 +168,70 @@ var bookResults = function (results){
 searchTitle("a clockwork orange");
 
 
+// get value from input element
+
+var formSubmitHandler = function(event){
+    //if we don't have it form refresh too much
+    event.preventDefault();
+
+    var title = titleInputEl.value.trim();
+
+    var titleArray = title.split(" ");
+    for (var i=0; i < titleArray.length; i++) {
+        titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
+    };
+
+    var correctedTitle = titleArray.join(" ");
+
+    // NOT PUTTING ON THE PAGE YET
+    // cityTitleEl.innerHTML = "<h2>" + correctedTitle + "</h2>";
+    // currentWeatherContainerEl.appendChild(cityTitleEl);
+
+        //load searchedCities (an array) from localStorage and turn strings back to objects
+        var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
+        //add the individal cityTitle item to the array of searched cities
+        searchedTitles.push(correctedTitle);
+        //add updated array to local storage
+        localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+        displaySearchHistory();
+
+}
+
+// var searchedTitleButtonEl = document.querySelector("#search-history-items");
 
 
+
+var displaySearchHistory = function() {
+    if (localStorage.length > 0) {
+       //grab stored array of searched cities from localStorage
+       var searchedTitles = JSON.parse(localStorage.getItem("searched-titles"));
+       //to sort from most-least recent (searched) changing the order of reading it
+       var recentSearchedTitles = searchedTitles.reverse();
+       //to remove any duplicates for final display version
+       var filteredSearchedTitles = [...new Set(recentSearchedTitles)];
+
+       //clear old display content
+       searchHistoryContainerEl.innerHTML = "";
+
+       //loop through searchedCities array to display array but...
+       for (i=0; i < filteredSearchedTitles.length; i++) {
+           //...stop at index 9 to keep only the most recent 10 showing
+           if (i>=10) {
+               break;
+           }
+           searchHistoryContainerEl.innerHTML += "<button class='button is-rounded search-history-item'>" + filteredSearchedTitles[i] + "</button>"
+       };
+   };
+};
+
+//displays on load of page
+displaySearchHistory();
+
+//add event listener to search history items
+// searchedCityButtonEl.addEventListener("click", buttonClickHandler)
+
+ // add event listeners to forms
+searchFormEl.addEventListener('submit', formSubmitHandler);
 
 
 
