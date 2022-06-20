@@ -1,3 +1,6 @@
+// Switch this to false when you want to use real fetching, true when you want to use the mock payloads
+const DEBUG = true;
+
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
 var movieTitle = document.querySelector(".movie-title");
@@ -6,8 +9,10 @@ var movieReview1 = document.getElementById("movie-review-1");
 var movieReview2 = document.getElementById("movie-review-2");
 var movieReview3 = document.getElementById("movie-review-3");
 
-
-const DEBUG = true;
+// HTML elements related to books 
+var bookCover = document.querySelector(".book-cover");
+var bookTitle = document.querySelector(".book-title");
+var bookRating = document.querySelector(".book-rating");
 
 const bookPayload = {
     allowAnonLogging: true,
@@ -83,11 +88,11 @@ function searchTitle(title) {
     const movieFetchString = `https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`;
     const bookFetchString = `https://www.googleapis.com/books/v1/volumes?q=${title}`
 
-    // if (DEBUG) {
-    //     // Do stuff with mock payloads
-    //     console.log(moviePayload);
-    //     console.log(bookPayload);
-    // }
+    if (DEBUG) {
+        // Do stuff with mock payloads
+        movieResults(moviePayload);
+        bookResults(bookPayload);
+    }
         // Do stuff with real payloads
         fetch(movieFetchString, movieOptions)
         .then(data => data.json())
@@ -102,7 +107,7 @@ function searchTitle(title) {
 
         fetch(bookFetchString)
 	    .then(data => data.json())
-	    .then(data => console.log(data.items[0].volumeInfo))
+	    .then(data => bookResults(data.items[0].volumeInfo))
 	    .catch(err => console.error(err));
 }
 
@@ -131,7 +136,32 @@ var movieResults = function (results){
     
 }
 
-searchTitle("oxygen");
+var bookResults = function (results){
+    bookCover.setAttribute("src", results.imageLinks.thumbnail);
+    bookTitle.textContent = results.title;
+
+    // round to nearest integer
+    const rating = Math.round(results.averageRating);
+    
+    if (rating === 1){
+        movieRating.textContent = "⭐";
+    }
+    if (rating === 2){
+        movieRating.textContent = "⭐⭐";
+    }
+    if (rating === 3){
+        movieRating.textContent = "⭐⭐⭐";
+    }
+    if (rating === 4){
+        movieRating.textContent = "⭐⭐⭐⭐";
+    }
+    if (rating === 5){
+        movieRating.textContent = "⭐⭐⭐⭐⭐";
+    }
+
+}
+
+searchTitle("a clockwork orange");
 
 
 
