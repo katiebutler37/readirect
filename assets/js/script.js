@@ -16,6 +16,8 @@ var bookRating = document.querySelector(".book-rating");
 
 var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
+var searchedTitleEl = document.querySelector("#searched-title");
+var resultsContainerEl = document.querySelector("#results");
 
 const bookPayload = {
     allowAnonLogging: true,
@@ -127,8 +129,38 @@ function searchTitle(title) {
         fetch(bookFetchString)
 	    .then(data => data.json())
 	    .then(data => bookResults(data.items[0].volumeInfo))
+        .then(() => displayResultsTitle())
 	    .catch(err => console.error(err));
 }
+
+
+var displayResultsTitle = function (){
+//clear old display content
+resultsContainerEl.innerHTML = "";
+
+ // get value from input element
+ var title = titleInputEl.value.trim();
+
+ var titleArray = title.split(" ");
+ for (var i=0; i < titleArray.length; i++) {
+     titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
+ };
+ var displayTitle = titleArray.join(" ");
+
+ searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
+ resultsContainerEl.appendChild(searchedTitleEl);
+
+ //may want load local storage array, push into array, and set updated search history array to local storage here
+
+ //dynamically create save button here, add the necessary styling classes and also append to the results container
+   var saveReviewButtonEl = document.createElement("button");
+   saveReviewButtonEl.classList = "button is-success is-responsive is-rounded is-medium";
+   saveReviewButtonEl.setAttribute("id", "save-btn");
+   saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
+   //append to results container
+   resultsContainerEl.appendChild(saveReviewButtonEl);
+}
+
 
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
@@ -179,8 +211,6 @@ var bookResults = function (results){
     }
 
 }
-//temporary hardcode
-searchTitle("a clockwork orange");
 
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
