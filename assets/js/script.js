@@ -16,6 +16,8 @@ var bookRating = document.querySelector(".book-rating");
 
 var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
+var searchedTitleEl = document.querySelector("#searched-title");
+var resultsContainerEl = document.querySelector("#results");
 
 const bookPayload = {
     allowAnonLogging: true,
@@ -126,9 +128,30 @@ function searchTitle(title) {
 
         fetch(bookFetchString)
 	    .then(data => data.json())
-	    .then(data => bookResults(data.items[0].volumeInfo))
+	    .then(data => bookResults(data.items[0].volumeInfo)) //would like to also call the display results title here
 	    .catch(err => console.error(err));
 }
+
+
+var displayResultsTitle = function (){
+//clear old display content
+resultsContainerEl.innerHTML = "";
+
+ // get value from input element
+ var title = titleInputEl.value.trim();
+
+ var titleArray = title.split(" ");
+ for (var i=0; i < titleArray.length; i++) {
+     titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
+ };
+ var displayTitle = titleArray.join(" ");
+
+ searchedTitleEl.innerHTML = "Displaying results for" + displayTitle;
+ resultsContainerEl.appendChild(searchedTitleEl);
+
+ //dynamically create save button here, add the necessary styling classes and also append to the results container
+}
+
 
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
