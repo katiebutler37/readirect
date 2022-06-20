@@ -1,5 +1,5 @@
-// Switch this to false when you want to use real fetching, true when you want to use the mock payloads
-const DEBUG = true;
+// True for mockpayloads/auto-search, False for real fetching and normal app behaviour 
+const DEBUG = false;
 
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
@@ -198,6 +198,10 @@ var displaySearchHistory = function() {
        };
    };
 };
+
+if (DEBUG) {
+    searchTitle("A Clockwork Orange");
+}
 
 //displays on load of page
 displaySearchHistory();
