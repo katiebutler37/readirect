@@ -150,6 +150,12 @@ resultsContainerEl.innerHTML = "";
  resultsContainerEl.appendChild(searchedTitleEl);
 
  //dynamically create save button here, add the necessary styling classes and also append to the results container
+   var saveReviewButtonEl = document.createElement("button");
+   saveReviewButtonEl.classList = "button is-success is-responsive is-rounded is-medium";
+   saveReviewButtonEl.setAttribute("id", "save-btn");
+   saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
+   //append to results container
+   resultsContainerEl.appendChild(saveReviewButtonEl);
 }
 
 
