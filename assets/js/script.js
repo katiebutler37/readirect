@@ -1,5 +1,5 @@
 // Switch this to false when you want to use real fetching, true when you want to use the mock payloads
-const DEBUG = false;
+const DEBUG = true;
 
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
@@ -134,6 +134,7 @@ function searchTitle(title) {
         // Do stuff with mock payloads
         movieResults(moviePayload);
         bookResults(bookPayload);
+        displayResultsTitle();
     }
     else {
         // Do stuff with real payloads in sequence
