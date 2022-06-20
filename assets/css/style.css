@@ -1,8 +1,9 @@
 :root {
     /* switch out for decided on colour palette */
-    --primary-color: rgb(224, 221, 221);
+    --primary-color: rgb(232, 72, 70);
     --secondary-color: black;
-    --tertiary-color: red;
+    --tertiary-color: rgb(243, 243, 243);
+
 }
 
 header {
