@@ -1,5 +1,5 @@
 // Switch this to false when you want to use real fetching, true when you want to use the mock payloads
-const DEBUG = true;
+const DEBUG = false;
 
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
@@ -14,9 +14,16 @@ var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
 
+<<<<<<< HEAD
 var searchFormEl = document.querySelector("#searchForm");
 var titleInputEl = document.querySelector("#title");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
+=======
+var titleInputEl = document.querySelector("#title");
+var searchFormEl = document.querySelector(".search-form");
+var searchedTitleEl = document.querySelector("#searched-title");
+var resultsContainerEl = document.querySelector("#results");
+>>>>>>> ac3de6ac652d477dbea73f13a51ce7079b46a493
 
 const bookPayload = {
     allowAnonLogging: true,
@@ -88,32 +95,90 @@ const movieOptions = {
 	}
 };
 
+var formSubmitHandler = function(event) {
+    // prevent page from refreshing
+    event.preventDefault();
+  
+    // get value from input element
+    var title = titleInputEl.value.trim();
+  
+    if (title) {
+        //pass title to be fetched
+      searchTitle(title);
+    } else {
+        //needs to be replaced with function to trigger a modal later
+      alert('Please enter a title');
+    }
+};
+
+async function fetchMovieData(title) {
+
+    let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
+    let initialData = await initialResponse.json();
+
+    let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
+    let finalData = await finalResponse.json();
+
+    return finalData;
+}
+
+async function fetchBookData(title) {
+    
+    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
+    let data = await response.json();
+
+    return data.items[0].volumeInfo;
+     
+}
+
 function searchTitle(title) {
-    const movieFetchString = `https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`;
-    const bookFetchString = `https://www.googleapis.com/books/v1/volumes?q=${title}`
 
     if (DEBUG) {
         // Do stuff with mock payloads
         movieResults(moviePayload);
         bookResults(bookPayload);
     }
-        // Do stuff with real payloads
-        fetch(movieFetchString, movieOptions)
-        .then(data => data.json())
-        .then(data => {
-            const id = data.Search[0].imdbID;
-            fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${id}`, movieOptions)
-            .then(response => response.json())
-            .then(results => movieResults(results))
-            .catch(err => console.error(err));
-        })
-        .catch(err => console.error(err))
+    else {
+        // Do stuff with real payloads in sequence
+        fetchMovieData(title)
+            .then((data) => movieResults(data))
+            .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
+                fetchBookData(title)
+                .then((data) => bookResults(data))
+            })
+            .then(() => displayResultsTitle())
+    }
 
-        fetch(bookFetchString)
-	    .then(data => data.json())
-	    .then(data => bookResults(data.items[0].volumeInfo))
-	    .catch(err => console.error(err));
 }
+
+
+var displayResultsTitle = function (){
+//clear old display content
+resultsContainerEl.innerHTML = "";
+
+ // get value from input element
+ var title = titleInputEl.value.trim();
+
+ var titleArray = title.split(" ");
+ for (var i=0; i < titleArray.length; i++) {
+     titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
+ };
+ var displayTitle = titleArray.join(" ");
+
+ searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
+ resultsContainerEl.appendChild(searchedTitleEl);
+
+ //may want load local storage array, push into array, and set updated search history array to local storage here
+
+ //dynamically create save button here, add the necessary styling classes and also append to the results container
+   var saveReviewButtonEl = document.createElement("button");
+   saveReviewButtonEl.classList = "button is-success is-responsive is-rounded is-medium";
+   saveReviewButtonEl.setAttribute("id", "save-btn");
+   saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
+   //append to results container
+   resultsContainerEl.appendChild(saveReviewButtonEl);
+}
+
 
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
@@ -138,6 +203,8 @@ var movieResults = function (results){
     movieReview2.textContent = results.Ratings[1].Source + " | " + results.Ratings[1].Value;
     movieReview3.textContent = results.Ratings[2].Source + " | " + results.Ratings[2].Value;
     
+    return results;
+
 }
 
 var bookResults = function (results){
@@ -165,6 +232,7 @@ var bookResults = function (results){
 
 }
 
+<<<<<<< HEAD
 searchTitle("a clockwork orange");
 
 
@@ -226,6 +294,10 @@ var displaySearchHistory = function() {
 
 //displays on load of page
 displaySearchHistory();
+=======
+// add event listeners to forms
+searchFormEl.addEventListener('submit', formSubmitHandler);
+>>>>>>> ac3de6ac652d477dbea73f13a51ce7079b46a493
 
 //add event listener to search history items
 // searchedCityButtonEl.addEventListener("click", buttonClickHandler)
