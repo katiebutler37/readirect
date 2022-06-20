@@ -14,6 +14,9 @@ var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
 
+var titleInputEl = document.querySelector("#title");
+var searchFormEl = document.querySelector(".search-form");
+
 const bookPayload = {
     allowAnonLogging: true,
     authors: ['Anthony Burgess'],
@@ -83,6 +86,22 @@ const movieOptions = {
 		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
 	}
 };
+
+var formSubmitHandler = function(event) {
+    // prevent page from refreshing
+    event.preventDefault();
+  
+    // get value from input element
+    var title = titleInputEl.value.trim();
+  
+    if (title) {
+        //pass title to be fetched
+      searchTitle(title);
+    } else {
+        //needs to be replaced with function to trigger a modal later
+      alert('Please enter a title');
+    }
+  };
 
 function searchTitle(title) {
     const movieFetchString = `https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`;
@@ -160,10 +179,11 @@ var bookResults = function (results){
     }
 
 }
-
+//temporary hardcode
 searchTitle("a clockwork orange");
 
-
+// add event listeners to forms
+searchFormEl.addEventListener('submit', formSubmitHandler);
 
 
 
