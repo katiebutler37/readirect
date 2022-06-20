@@ -11,9 +11,12 @@
 - Bulma
 - jQuery
 
-### Contributers
+### Contributors
 
-<!-- fill in everyone's name and link to github account here -->
+- [Moshe](https://github.com/Moshe-jpg)
+- [Fumi](https://github.com/fumixer)
+- [Ryan](https://github.com/ryanraposo)
+- [Katie](https://github.com/katiebutler37)
 
 ### Page Preview
 
