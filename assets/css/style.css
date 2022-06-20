@@ -41,6 +41,7 @@ nav {
 
 form {
     font-size: 20px;
+    color: black;
 }
 
 main {
@@ -96,6 +97,7 @@ main {
     display: flex;
     align-items: center;
     max-width: 200px;
+    color: black;
 }
 
 .modal-content {
@@ -111,6 +113,7 @@ footer {
     display: flex;
     justify-content: space-between;
     padding: 8px;
+    color: black;
 }
 
 /* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */

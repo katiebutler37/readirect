@@ -157,20 +157,35 @@ var bookResults = function (results){
     // round to nearest integer
     const rating = Math.round(results.averageRating);
     
-    if (rating === 1){
-        movieRating.textContent = "⭐";
+    if (0 <= rating <= 0.5){
+        movieRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (rating === 2){
-        movieRating.textContent = "⭐⭐";
+    if (0.5 < rating <= 1){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i>";
     }
-    if (rating === 3){
-        movieRating.textContent = "⭐⭐⭐";
+    if (1 < rating <= 1.5){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (rating === 4){
-        movieRating.textContent = "⭐⭐⭐⭐";
+    if (1.5 < rating <= 2){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (rating === 5){
-        movieRating.textContent = "⭐⭐⭐⭐⭐";
+    if (2 < rating <= 2.5){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+    }
+    if (2.5 < rating <= 3){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+    }
+    if (3 < rating <= 3.5){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+    }
+    if (3.5 < rating <= 4){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+    }
+    if (4 < rating <= 4.5){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+    }
+    if (4.5 < rating <= 5){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
 
 }
