@@ -130,17 +130,36 @@ var movieResults = function (results){
     if (results.Metascore <= 20){
         movieRating.textContent = "⭐";
     }
-    if (results.Metascore > 20 && results.Metascore <= 40){
-        movieRating.textContent = "⭐⭐";
+  
+    if (0 <= results.Metascore <= 10){
+        movieRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (results.Metascore > 40 && results.Metascore <= 60){
-        movieRating.textContent = "⭐⭐⭐";
+    if (10 < results.Metascore <= 20){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i>";
     }
-    if (results.Metascore > 60 && results.Metascore <= 80){
-        movieRating.textContent = "⭐⭐⭐⭐";
+    if (20 < results.Metascore <= 30){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (results.Metascore > 80 && results.Metascore <= 100){
-        movieRating.textContent = "⭐⭐⭐⭐⭐";
+    if (30 < results.Metascore <= 40){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+    }
+    if (40 < results.Metascore <= 50){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+    }
+    if (50 < results.Metascore <= 60){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+    }
+    if (60 < results.Metascore <= 70){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+    }
+    if (70 < results.Metascore <= 80){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+    }
+    if (80 < results.Metascore <= 90){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+    }
+    if (90 < results.Metascore <= 100){
+        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
     movieReview1.textContent = results.Ratings[0].Source + " (IMDB) | " + results.Ratings[0].Value;
     movieReview2.textContent = results.Ratings[1].Source + " | " + results.Ratings[1].Value;
@@ -155,37 +174,37 @@ var bookResults = function (results){
     bookTitle.textContent = results.title;
 
     // round to nearest integer
-    const rating = Math.round(results.averageRating);
+    const rating = results.averageRating;
     
     if (0 <= rating <= 0.5){
-        movieRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i>";
     }
     if (0.5 < rating <= 1){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i>";
     }
     if (1 < rating <= 1.5){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
     if (1.5 < rating <= 2){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
     if (2 < rating <= 2.5){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
     if (2.5 < rating <= 3){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
     if (3 < rating <= 3.5){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
     if (3.5 < rating <= 4){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
     if (4 < rating <= 4.5){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
     if (4.5 < rating <= 5){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
+        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
 
 }

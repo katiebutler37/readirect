@@ -90,14 +90,14 @@ main {
     justify-content: space-around;
 }
 .search-history-item {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     margin: 8px;
     flex: 1;
     justify-content: center;
     display: flex;
     align-items: center;
     max-width: 200px;
-    color: black;
+    color: white;
 }
 
 .modal-content {
