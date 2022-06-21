@@ -118,7 +118,11 @@ main {
     padding: 50px;
     border-radius: 5px;
     font-size: larger;
-    color: white;
+    color: black;
+}
+
+.modal-close {
+    color: black;
 }
 
 footer {
