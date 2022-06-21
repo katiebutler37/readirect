@@ -19,7 +19,7 @@ header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 9998;
     flex-wrap: wrap;
 }
 
@@ -111,6 +111,10 @@ main {
     align-items: center;
     max-width: 200px;
     color: white;
+}
+
+.modal {
+    z-index: 9999;
 }
 
 .modal-content {

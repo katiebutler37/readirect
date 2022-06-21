@@ -32,16 +32,16 @@ const movieOptions = {
 function errorNoMatch() {
     console.log("search error");
     $("#search-error").addClass("is-active");
-}
+};
 
 function errorNoConnection() {
     $("#server-error").addClass("is-active");
-}
+};
 
 var closeModal = function (event) {
     event.preventDefault();
     $(".modal").removeClass("is-active");
-}
+};
 
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
