@@ -1,8 +1,8 @@
 :root {
     /* switch out for decided on colour palette */
-    --primary-color: rgb(70, 81, 232);
+    --primary-color: rgb(208, 208, 208);
     --secondary-color: black;
-    --tertiary-color: rgb(215, 215, 215);
+    --tertiary-color: rgb(255, 255, 255);
 
 }
 
@@ -105,10 +105,11 @@ main {
 }
 
 .modal-content {
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
     padding: 50px;
     border-radius: 5px;
     font-size: larger;
+    color: white;
 }
 
 footer {
