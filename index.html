@@ -39,9 +39,15 @@
                 <p id="searched-title"></p>   
         </section>
 
+        <!-- This will disappear once a search is made -->
+        <div class="onload-display">
+            <h3 class="onload-h3">Search A Title To Compare The Book & Movie</h3>
+        </div>
+        
+
         <!-- hardcoded card container and card content to be replaced with js appended data -->
         <!-- Responsiveness: Bulma's styling includes default column stacking at full width for any screensize less than tablets-->
-        <div class="columns">
+        <div class="columns" id="hidden-onload">
             <!-- book review card -->
             <div class="column">
                 <div class="card-container">
