@@ -5,14 +5,13 @@ const DEBUG = false;
 var movieCover = document.querySelector(".movie-cover");
 var movieTitle = document.querySelector(".movie-title");
 var movieRating = document.querySelector(".movie-rating");
-var movieReview1 = document.getElementById("movie-review-1");
-var movieReview2 = document.getElementById("movie-review-2");
-var movieReview3 = document.getElementById("movie-review-3");
+var movieDescription = document.querySelector(".movie-description");
 
 // HTML elements related to books 
 var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
+var bookDescription = document.querySelector(".book-description");
 
 var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
