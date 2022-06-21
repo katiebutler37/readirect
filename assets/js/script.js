@@ -19,6 +19,13 @@ var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
+var rottenTomatoesURL = "https://www.rottentomatoes.com/m/";
+var bookMarksURL = "https://bookmarks.reviews/reviews/"
+
+var moreMovieButtonEl = document.querySelector(".more-movie-btn");
+var moreBookButtonEl = document.querySelector(".more-book-btn");
+
+
 
 const movieOptions = {
 	method: 'GET',
@@ -48,6 +55,14 @@ var formSubmitHandler = function(event) {
     
     // get value from input element
     var title = titleInputEl.value.trim();
+
+    var movieTitleForURL = title.replace(/ /g, "_");
+
+    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
+
+    var bookTitleForURL = title.replace(/ /g,"-");
+
+    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
     
     if (title) {
         // display the columns
@@ -64,6 +79,14 @@ var buttonClickHandler = function(event) {
     //grab text from button clicked and give it back to original fetch function
     var searchedTitle = event.target.textContent;
     titleInputEl.value = searchedTitle;
+    
+    var movieTitleForURL = title.replace(/ /g, "_");
+
+    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
+
+    var bookTitleForURL = title.replace(/ /g,"-");
+
+    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
     searchTitle(searchedTitle);
     showDisplay();
 };
