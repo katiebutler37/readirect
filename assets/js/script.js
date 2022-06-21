@@ -112,17 +112,17 @@ function searchTitle(title) {
 
     if (DEBUG) {
         // Do stuff with mock payloads
-        movieResults(moviePayload);
-        bookResults(bookPayload);
+        displayMovieResults(moviePayload);
+        displayBookResults(bookPayload);
         displayResultsTitle();
     }
     else {
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
-            .then((data) => movieResults(data))
+            .then((data) => displayMovieResults(data))
             .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
                 fetchBookData(title)
-                .then((data) => bookResults(data))
+                .then((data) => displayBookResults(data))
             })
             .then(() => displayResultsTitle())
     }
@@ -168,89 +168,63 @@ var displayResultsTitle = function (){
 }
 
 
-var movieResults = function (results){
+function getStarsHtml(rating, isBook) {
+
+    if (isBook) {
+        // change rating to 'out of 100' format
+        rating = rating * 20;
+    }
+
+    if (0 <= rating && rating <= 10){
+        return STARS['0.5'];
+    }
+    else if (10 < rating && rating <= 20){
+        return STARS['1.0'];
+    }
+    else if (20 < rating && rating <= 30){
+        return STARS['1.5'];
+    }
+    else if (30 < rating && rating <= 40){
+        return STARS['2.0'];
+    }
+    else if (40 < rating && rating <= 50){
+        return STARS['2.5'];
+    }
+    else if (50 < rating && rating <= 60){
+        return STARS['3.0'];
+    }
+    else if (60 < rating && rating <= 70){
+        return STARS['3.5'];
+    }
+    else if (70 < rating && rating <= 80){
+        return STARS['4.0'];
+    }
+    else if (80 < rating && rating <= 90){
+        return STARS['4.5'];
+    }
+    else if (90 < rating && rating <= 100){
+        return STARS['5.0'];
+    }
+
+}
+
+var displayMovieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
     movieTitle.textContent = results.Title;
     movieDescription.textContent = results.Plot;
-    
-    // this is our Star rating system based on the MetaScore
-    if (results.Metascore <= 20){
-        movieRating.textContent = "⭐";
-    }
-  
-    if (0 <= results.Metascore && results.Metascore <= 10){
-        movieRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (10 < results.Metascore && results.Metascore <= 20){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (20 < results.Metascore && results.Metascore <= 30){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (30 < results.Metascore && results.Metascore <= 40){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (40 < results.Metascore && results.Metascore <= 50){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (50 < results.Metascore && results.Metascore <= 60){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (60 < results.Metascore && results.Metascore <= 70){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (70 < results.Metascore && results.Metascore <= 80){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (80 < results.Metascore && results.Metascore <= 90){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
-    }
-    if (90 < results.Metascore && results.Metascore <= 100){
-        movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
-    }
-    
+    movieRating.innerHTML = getStarsHtml(results.Metascore, false);
+
     return results;
 
 }
 
-var bookResults = function (results){
+var displayBookResults = function (results){
     bookCover.setAttribute("src", results.imageLinks.thumbnail);
     bookTitle.textContent = results.title;
     bookDescription.textContent = results.description;
+    bookRating.innerHTML = getStarsHtml(results.averageRating, true);
 
-    // round to nearest integer
-    const rating = results.averageRating;
-    
-    if (0 <= rating && rating <= 0.5){
-        bookRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (0.5 < rating && rating <= 1){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (1 < rating && rating <= 1.5){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (1.5 < rating && rating <= 2){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (2 < rating && rating <= 2.5){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (2.5 < rating && rating <= 3){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (3 < rating && rating <= 3.5){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (3.5 < rating && rating <= 4){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-regular fa-star'></i>";
-    }
-    if (4 < rating && rating <= 4.5){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
-    }
-    if (4.5 < rating && rating <= 5){
-        bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
-    }
+    return results;
 }
 
 var displaySearchHistory = function() {
