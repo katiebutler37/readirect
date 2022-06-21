@@ -20,6 +20,7 @@ var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
+
 const movieOptions = {
 	method: 'GET',
 	headers: {
@@ -43,9 +44,14 @@ var formSubmitHandler = function(event) {
     } else {
         //needs to be replaced with function to trigger a modal later
       alert('Please enter a title');
-    }
+    } 
+};
 
-    
+var buttonClickHandler = function(event) {
+    //grab text from button clicked and give it back to original fetch function
+    var searchedTitle = event.target.textContent;
+    titleInputEl.value = searchedTitle;
+    searchTitle(searchedTitle);
 };
 
 async function fetchMovieData(title) {
@@ -88,7 +94,6 @@ function searchTitle(title) {
     }
 
 }
-
 
 var displayResultsTitle = function (){
     //clear old display content
@@ -217,5 +222,9 @@ var showDisplay = function (){
 
 //displays on load of page
 displaySearchHistory();
+
+//add event listener to search history items
+searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
