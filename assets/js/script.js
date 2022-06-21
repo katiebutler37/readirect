@@ -84,6 +84,7 @@ function searchTitle(title) {
                 fetchBookData(title)
                 .then((data) => bookResults(data))
             })
+            .then((data) => compareResults(data))
             .then(() => displayResultsTitle())
     }
 
@@ -204,6 +205,16 @@ var displaySearchHistory = function() {
 if (DEBUG) {
     searchTitle("A Clockwork Orange");
 }
+
+var compareResults = function(results){
+    // We will highlight the movie results if their overall score is higher
+    var averageMovieRating = (results.Metascore / 10) / 2;
+    console.log(averageMovieRating);
+    // we will highlight the book results if their overall score is higher
+    var averageBookRating = results.averageRating;
+    console.log(averageBookRating);
+};
+
 
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
