@@ -178,31 +178,31 @@ function getStarsHtml(rating, isBook) {
     if (0 <= rating && rating <= 10){
         return STARS['0.5'];
     }
-    else if (10 < rating && rating <= 20){
+    if (10 < rating && rating <= 20){
         return STARS['1.0'];
     }
-    else if (20 < rating && rating <= 30){
+    if (20 < rating && rating <= 30){
         return STARS['1.5'];
     }
-    else if (30 < rating && rating <= 40){
+    if (30 < rating && rating <= 40){
         return STARS['2.0'];
     }
-    else if (40 < rating && rating <= 50){
+    if (40 < rating && rating <= 50){
         return STARS['2.5'];
     }
-    else if (50 < rating && rating <= 60){
+    if (50 < rating && rating <= 60){
         return STARS['3.0'];
     }
-    else if (60 < rating && rating <= 70){
+    if (60 < rating && rating <= 70){
         return STARS['3.5'];
     }
-    else if (70 < rating && rating <= 80){
+    if (70 < rating && rating <= 80){
         return STARS['4.0'];
     }
-    else if (80 < rating && rating <= 90){
+    if (80 < rating && rating <= 90){
         return STARS['4.5'];
     }
-    else if (90 < rating && rating <= 100){
+    if (90 < rating && rating <= 100){
         return STARS['5.0'];
     }
 
@@ -215,7 +215,6 @@ var displayMovieResults = function (results){
     movieRating.innerHTML = getStarsHtml(results.Metascore, false);
 
     return results;
-
 }
 
 var displayBookResults = function (results){
