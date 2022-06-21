@@ -52,6 +52,7 @@ var buttonClickHandler = function(event) {
     var searchedTitle = event.target.textContent;
     titleInputEl.value = searchedTitle;
     searchTitle(searchedTitle);
+    showDisplay();
 };
 
 async function fetchMovieData(title) {
