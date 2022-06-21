@@ -57,6 +57,7 @@ main {
 .onload-display {
     display: block;
     text-align: center;
+    opacity: 50%;
 }
 
 #hidden-onload {
