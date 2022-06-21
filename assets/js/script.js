@@ -129,6 +129,9 @@ var displayResultsTitle = function (){
     //add updated array to local storage
     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
     displaySearchHistory();
+    
+    //clear old input from form
+    titleInputEl.value = "";
 }
 
 
@@ -171,7 +174,6 @@ var movieResults = function (results){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
     
-    
     return results;
 
 }
@@ -213,7 +215,6 @@ var bookResults = function (results){
     if (4.5 < rating && rating <= 5){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-
 }
 
 var displaySearchHistory = function() {
@@ -246,7 +247,7 @@ if (DEBUG) {
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
     // reveal the columns display
-    $("#hidden-onload").css("display", "flex");
+    $(".columns").removeAttr('id');
     // reposition the footer
     $("footer").css("position", "relative");
     // and hide the placeholder "Search A Title"
