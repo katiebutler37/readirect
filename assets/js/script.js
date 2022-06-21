@@ -1,10 +1,11 @@
 // True for mockpayloads/auto-search, False for real fetching and normal app behaviour 
 const DEBUG = false;
 
+// Our title and search history items elements
 var titleInputEl = document.querySelector("#title");
 var searchHistoryContainerEl = document.querySelector('.search-history-items');
 
-
+// Our API key and host for the movie database
 const movieOptions = {
 	method: 'GET',
 	headers: {
@@ -27,6 +28,7 @@ var closeModal = function (event) {
     $(".modal").removeClass("is-active");
 };
 
+// The function which gets all of our functions moving
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
@@ -45,6 +47,7 @@ var formSubmitHandler = function(event) {
     } 
 };
 
+// By clicking on one of the saved searches this function gets triggered
 var buttonClickHandler = function(event) {
     //grab text from button clicked and give it back to original fetch function
     var searchedTitle = event.target.textContent;
@@ -114,6 +117,7 @@ function searchTitle(title) {
 
 }
 
+// Display the results
 var displayResultsTitle = function (){
     //clear old display content
     $("#results").html("");
@@ -152,7 +156,7 @@ var displayResultsTitle = function (){
     titleInputEl.value = "";
 }
 
-
+// Our star rating system
 function getStarsHtml(rating, isBook) {
 
     if (isBook) {
@@ -193,6 +197,7 @@ function getStarsHtml(rating, isBook) {
 
 }
 
+// The movie data that will be displayed on the page
 var displayMovieResults = function (results){
     $(".movie-cover").attr("src", results.Poster);
     $(".movie-title").text(results.Title);
@@ -202,6 +207,7 @@ var displayMovieResults = function (results){
     return results;
 }
 
+// The book data that will be displayed on the page
 var displayBookResults = function (results){
     $(".book-cover").attr("src", results.imageLinks.thumbnail);
     $(".book-title").text(results.title);
@@ -211,6 +217,7 @@ var displayBookResults = function (results){
     return results;
 }
 
+// This function will ensure that our searches persist
 var displaySearchHistory = function() {
     if (localStorage.length > 0) {
        //grab stored array of searched cities from localStorage
