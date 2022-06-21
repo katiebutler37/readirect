@@ -88,9 +88,16 @@ main {
     align-items: center;
 }
 
-
 .img-container {
     margin: 50px;
+}
+
+.movie-description, .book-description {
+    font-size: medium;
+}
+
+.card h4 {
+    font-size: small;
 }
 
 #search-history {

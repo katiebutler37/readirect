@@ -134,6 +134,8 @@ var displayResultsTitle = function (){
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
     movieTitle.textContent = results.Title;
+    movieDescription.textContent = results.Plot;
+    
     // this is our Star rating system based on the MetaScore
     if (results.Metascore <= 20){
         movieRating.textContent = "⭐";
@@ -178,6 +180,7 @@ var movieResults = function (results){
 var bookResults = function (results){
     bookCover.setAttribute("src", results.imageLinks.thumbnail);
     bookTitle.textContent = results.title;
+    bookDescription.textContent = results.description;
 
     // round to nearest integer
     const rating = results.averageRating;
