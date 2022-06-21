@@ -5,14 +5,13 @@ const DEBUG = false;
 var movieCover = document.querySelector(".movie-cover");
 var movieTitle = document.querySelector(".movie-title");
 var movieRating = document.querySelector(".movie-rating");
-var movieReview1 = document.getElementById("movie-review-1");
-var movieReview2 = document.getElementById("movie-review-2");
-var movieReview3 = document.getElementById("movie-review-3");
+var movieDescription = document.querySelector(".movie-description");
 
 // HTML elements related to books 
 var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
+var bookDescription = document.querySelector(".book-description");
 
 var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
@@ -152,6 +151,8 @@ var displayResultsTitle = function (){
 var movieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
     movieTitle.textContent = results.Title;
+    movieDescription.textContent = results.Plot;
+    
     // this is our Star rating system based on the MetaScore
     if (results.Metascore <= 20){
         movieRating.textContent = "⭐";
@@ -195,6 +196,7 @@ var movieResults = function (results){
 var bookResults = function (results){
     bookCover.setAttribute("src", results.imageLinks.thumbnail);
     bookTitle.textContent = results.title;
+    bookDescription.textContent = results.description;
 
     // round to nearest integer
     const rating = results.averageRating;

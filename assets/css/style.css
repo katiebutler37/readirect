@@ -95,9 +95,16 @@ main {
     flex-grow: inherit;
 }
 
-
 .img-container {
     margin: 50px;
+}
+
+.movie-description, .book-description {
+    font-size: medium;
+}
+
+.card h4 {
+    font-size: small;
 }
 
 #search-history {
