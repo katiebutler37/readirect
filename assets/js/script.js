@@ -97,8 +97,13 @@ async function fetchBookData(title) {
     
         return data.items[0].volumeInfo;
     }
-    catch {
-        errorNoConnection();
+    catch(err) {
+        if (err.message === "Failed to fetch") {
+            errorNoConnection();
+        }
+        else {
+            errorNoMatch();
+        }
     }
      
 }
