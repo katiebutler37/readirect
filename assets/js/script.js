@@ -131,34 +131,34 @@ var movieResults = function (results){
         movieRating.textContent = "⭐";
     }
   
-    if (0 <= results.Metascore <= 10){
+    if (0 <= results.Metascore && results.Metascore <= 10){
         movieRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (10 < results.Metascore <= 20){
+    if (10 < results.Metascore && results.Metascore <= 20){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i>";
     }
-    if (20 < results.Metascore <= 30){
+    if (20 < results.Metascore && results.Metascore <= 30){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (30 < results.Metascore <= 40){
+    if (30 < results.Metascore && results.Metascore <= 40){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (40 < results.Metascore <= 50){
+    if (40 < results.Metascore && results.Metascore <= 50){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (50 < results.Metascore <= 60){
+    if (50 < results.Metascore && results.Metascore <= 60){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (60 < results.Metascore <= 70){
+    if (60 < results.Metascore && results.Metascore <= 70){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (70 < results.Metascore <= 80){
+    if (70 < results.Metascore && results.Metascore <= 80){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (80 < results.Metascore <= 90){
+    if (80 < results.Metascore && results.Metascore <= 90){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (90 < results.Metascore <= 100){
+    if (90 < results.Metascore && results.Metascore <= 100){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
     movieReview1.textContent = results.Ratings[0].Source + " (IMDB) | " + results.Ratings[0].Value;
