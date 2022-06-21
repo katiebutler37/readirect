@@ -70,13 +70,18 @@ var buttonClickHandler = function(event) {
 
 async function fetchMovieData(title) {
 
-    let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
-    let initialData = await initialResponse.json();
-
-    let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
-    let finalData = await finalResponse.json();
-
-    return finalData;
+    try {
+        let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
+        let initialData = await initialResponse.json();
+    
+        let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
+        let finalData = await finalResponse.json();
+    
+        return finalData;
+    }
+    catch {
+        errorNoConnection();
+    }
 }
 
 async function fetchBookData(title) {
