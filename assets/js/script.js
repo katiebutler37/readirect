@@ -20,14 +20,6 @@ var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
 
-const movieOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'fc6b69c0damshf39a0c0e95d5241p10963bjsn7774c35cda52',
-		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-	}
-};
-
 function errorNoMatch() {
     console.log("search error");
     $("#search-error").addClass("is-active");
