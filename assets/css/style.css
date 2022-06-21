@@ -71,6 +71,7 @@ main {
     margin: auto 30px auto 30px;
     font-size: 26px;
 }
+
 .fa-check {
     margin: 4px;
 }
@@ -118,6 +119,7 @@ main {
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .search-history-item {
     background-color: var(--secondary-color);
     margin: 8px;
@@ -158,19 +160,19 @@ footer {
 }
 
 /* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */
-@media screen and (max-width: 980px) {
-}
-  
+@media screen and (max-width: 980px) {}
+
 /* MEDIA QUERY FOR TABLETS AND SMALLER */
 @media screen and (max-width: 768px) {
     #saved-reviews-btn {
         display: none;
     }
+
     .brand {
         font-size: 32px;
     }
 }
-  
+
 /* MEDIA QUERY FOR MOBILE PHONES AND SMALLER */
 @media screen and (max-width: 575px) {
     header {
@@ -178,15 +180,19 @@ footer {
         text-align: center;
         height: fit-content;
     }
-#results {
-    font-size: 18px;
-}
-#search-history {
-    text-align: center;
-}
-#search-history h2 {
-    font-size: 22px;
-}
+
+    #results {
+        font-size: 18px;
+    }
+
+    #search-history {
+        text-align: center;
+    }
+
+    #search-history h2 {
+        font-size: 22px;
+    }
+
     footer {
         font-size: 12px;
     }
