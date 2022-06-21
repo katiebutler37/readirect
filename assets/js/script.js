@@ -70,21 +70,41 @@ var buttonClickHandler = function(event) {
 
 async function fetchMovieData(title) {
 
-    let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
-    let initialData = await initialResponse.json();
+    try {
+        let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
+        let initialData = await initialResponse.json();
 
-    let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
-    let finalData = await finalResponse.json();
-
-    return finalData;
+        let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
+        let finalData = await finalResponse.json();
+    
+        return finalData;
+    }
+    catch(err) {
+        if (err.message === "Failed to fetch") {
+            errorNoConnection();
+        }
+        else {
+            errorNoMatch();
+        }
+    }
 }
 
 async function fetchBookData(title) {
     
-    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&q=${title}`);
-    let data = await response.json();
-
-    return data.items[0].volumeInfo;
+    try {
+        let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
+        let data = await response.json();
+    
+        return data.items[0].volumeInfo;
+    }
+    catch(err) {
+        if (err.message === "Failed to fetch") {
+            errorNoConnection();
+        }
+        else {
+            errorNoMatch();
+        }
+    }
      
 }
 
