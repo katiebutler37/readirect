@@ -31,6 +31,8 @@ const movieOptions = {
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
+    // display the columns
+    showDisplay();
   
     // get value from input element
     var title = titleInputEl.value.trim();
@@ -202,6 +204,16 @@ var displaySearchHistory = function() {
 if (DEBUG) {
     searchTitle("A Clockwork Orange");
 }
+
+// show the columns display and reposition the footer when the search button is clicked
+var showDisplay = function (){
+    // reveal the columns display
+    $("#hidden-onload").css("display", "flex");
+    // reposition the footer
+    $("footer").css("position", "relative");
+    // and hide the placeholder "Search A Title"
+    $(".onload-display").css("display", "none");
+};
 
 //displays on load of page
 displaySearchHistory();

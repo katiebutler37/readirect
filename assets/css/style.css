@@ -48,6 +48,15 @@ main {
     font-size: 20px;
 }
 
+.onload-display {
+    display: block;
+    text-align: center;
+}
+
+#hidden-onload {
+    display: none;
+}
+
 #results {
     display: flex;
     justify-content: space-between;
@@ -110,6 +119,9 @@ footer {
     display: flex;
     justify-content: space-between;
     padding: 8px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 /* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */
