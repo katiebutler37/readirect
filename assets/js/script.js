@@ -1,5 +1,5 @@
-// Switch this to false when you want to use real fetching, true when you want to use the mock payloads
-const DEBUG = true;
+// True for mockpayloads/auto-search, False for real fetching and normal app behaviour 
+const DEBUG = false;
 
 // Our Movie card variables which will hold the fetched data
 var movieCover = document.querySelector(".movie-cover");
@@ -20,6 +20,7 @@ var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
+
 const movieOptions = {
 	method: 'GET',
 	headers: {
@@ -31,19 +32,27 @@ const movieOptions = {
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
-  
+    
     // get value from input element
     var title = titleInputEl.value.trim();
-  
+    
     if (title) {
+        // display the columns
+        showDisplay();
         //pass title to be fetched
       searchTitle(title);
     } else {
         //needs to be replaced with function to trigger a modal later
       alert('Please enter a title');
-    }
+    } 
+};
 
-    
+var buttonClickHandler = function(event) {
+    //grab text from button clicked and give it back to original fetch function
+    var searchedTitle = event.target.textContent;
+    titleInputEl.value = searchedTitle;
+    searchTitle(searchedTitle);
+    showDisplay();
 };
 
 async function fetchMovieData(title) {
@@ -72,6 +81,7 @@ function searchTitle(title) {
         // Do stuff with mock payloads
         movieResults(moviePayload);
         bookResults(bookPayload);
+        displayResultsTitle();
     }
     else {
         // Do stuff with real payloads in sequence
@@ -85,7 +95,6 @@ function searchTitle(title) {
     }
 
 }
-
 
 var displayResultsTitle = function (){
     //clear old display content
@@ -161,9 +170,7 @@ var movieResults = function (results){
     if (90 < results.Metascore && results.Metascore <= 100){
         movieRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    movieReview1.textContent = results.Ratings[0].Source + " (IMDB) | " + results.Ratings[0].Value;
-    movieReview2.textContent = results.Ratings[1].Source + " | " + results.Ratings[1].Value;
-    movieReview3.textContent = results.Ratings[2].Source + " | " + results.Ratings[2].Value;
+    
     
     return results;
 
@@ -232,7 +239,25 @@ var displaySearchHistory = function() {
    };
 };
 
+if (DEBUG) {
+    searchTitle("A Clockwork Orange");
+}
+
+// show the columns display and reposition the footer when the search button is clicked
+var showDisplay = function (){
+    // reveal the columns display
+    $("#hidden-onload").css("display", "flex");
+    // reposition the footer
+    $("footer").css("position", "relative");
+    // and hide the placeholder "Search A Title"
+    $(".onload-display").css("display", "none");
+};
+
 //displays on load of page
 displaySearchHistory();
+
+//add event listener to search history items
+searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);

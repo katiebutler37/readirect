@@ -40,9 +40,15 @@
                 <p id="searched-title"></p>   
         </section>
 
+        <!-- This will disappear once a search is made -->
+        <div class="onload-display">
+            <h3 class="onload-h3">Search A Title To Compare The Book & Movie</h3>
+        </div>
+        
+
         <!-- hardcoded card container and card content to be replaced with js appended data -->
         <!-- Responsiveness: Bulma's styling includes default column stacking at full width for any screensize less than tablets-->
-        <div class="columns">
+        <div class="columns" id="hidden-onload">
             <!-- book review card -->
             <div class="column">
                 <div class="card-container">
@@ -50,18 +56,15 @@
                     <article class="card">
                         <div class="img-container">
                             <figure class="card-image is-2by3">
-                                <img class="cover book-cover" src="./images/placeholder.jpg" />
+                                <img class="cover book-cover" src="" />
                             </figure>    
                         </div>
                         <div class="card-content">
-                            <h3 class="displayed-title title book-title">Gone Girl</h3>
+                            <h3 class="displayed-title title book-title"></h3>
                             <!-- insert appropriate icons to display rating info (see if there is an icon endpoint, otherwise will have to code conditional statements to translate the rating number into icons) -->
                             <div class="star-rating book-rating">
                             </div>
                             <div class="top-reviews book-reviews">
-                                <p class="block book-review-1"></p>
-                                <p class="block book-review-2"></p>
-                                <p class="block book-review-3"></p>
                             </div>
                             <br>
                             <!-- link to respective review page on goodreads site through URL endpoint -->
@@ -77,18 +80,15 @@
                 <article class="card">
                     <div class="img-container">
                         <figure class="card-image is-2by3">
-                            <img class="cover movie-cover" src="images\placeholder.jpg"/>
+                            <img class="cover movie-cover" src=""/>
                         </figure>    
                     </div>
                     <div class="card-content">
-                        <h3 class="displayed-title title movie-title">Gone Girl</h3>
+                        <h3 class="displayed-title title movie-title"></h3>
                         <!-- insert appropriate icons to display rating info (see if there is an icon endpoint, otherwise will have to code conditional statements to translate the rating number into icons) -->
                         <div class="star-rating movie-rating">
                         </div>
                         <div class="top-reviews movie-ratings">
-                            <p class="block" id="movie-review-1">"Worth the watch!" -Jared</p>
-                            <p class="block" id="movie-review-2">"What a movie! I was on the edge of my seat the whole 2 hours. Would definitely recommend if you're looking for some chaotic energy. It's an unpredictable emotional rollercoaster." -Mohammed</p>
-                            <p class="block" id="movie-review-3">"Irresistible, suspenseful, shocking. If you love a good murder mystery, Gone Girl is for you." -Paige</p>
                         </div>
                         <br>
                         <!-- link to respective review page on goodreads site through URL endpoint -->
