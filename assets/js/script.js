@@ -1,23 +1,8 @@
 // True for mockpayloads/auto-search, False for real fetching and normal app behaviour 
 const DEBUG = false;
 
-// Our Movie card variables which will hold the fetched data
-var movieCover = document.querySelector(".movie-cover");
-var movieTitle = document.querySelector(".movie-title");
-var movieRating = document.querySelector(".movie-rating");
-var movieDescription = document.querySelector(".movie-description");
-
-// HTML elements related to books 
-var bookCover = document.querySelector(".book-cover");
-var bookTitle = document.querySelector(".book-title");
-var bookRating = document.querySelector(".book-rating");
-var bookDescription = document.querySelector(".book-description");
-
 var titleInputEl = document.querySelector("#title");
-var searchFormEl = document.querySelector(".search-form");
-var searchedTitleEl = document.querySelector("#searched-title");
-var resultsContainerEl = document.querySelector("#results");
-var searchHistoryContainerEl = document.querySelector('.search-history-items')
+var searchHistoryContainerEl = document.querySelector('.search-history-items');
 
 
 const movieOptions = {
@@ -131,7 +116,7 @@ function searchTitle(title) {
 
 var displayResultsTitle = function (){
     //clear old display content
-    resultsContainerEl.innerHTML = "";
+    $("#results").html("");
 
     // get value from input element
     var title = titleInputEl.value.trim();
@@ -142,8 +127,8 @@ var displayResultsTitle = function (){
     };
     var displayTitle = titleArray.join(" ");
 
-    searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
-    resultsContainerEl.appendChild(searchedTitleEl);
+    $("#searched-title").html("Displaying results for: " + displayTitle);
+    $("#results").append($("#searched-title"));
 
    //may want load local storage array, push into array, and set updated search history array to local storage here
 
@@ -153,7 +138,7 @@ var displayResultsTitle = function (){
    saveReviewButtonEl.setAttribute("id", "save-btn");
    saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
    //append to results container
-   resultsContainerEl.appendChild(saveReviewButtonEl);
+   $("#results").append(saveReviewButtonEl);
 
     //load searchedCities (an array) from localStorage and turn strings back to objects
     var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
@@ -209,19 +194,19 @@ function getStarsHtml(rating, isBook) {
 }
 
 var displayMovieResults = function (results){
-    movieCover.setAttribute("src", results.Poster);
-    movieTitle.textContent = results.Title;
-    movieDescription.textContent = results.Plot;
-    movieRating.innerHTML = getStarsHtml(results.Metascore, false);
+    $(".movie-cover").attr("src", results.Poster);
+    $(".movie-title").text(results.Title);
+    $(".movie-description").text(results.Plot);
+    $(".movie-rating").html (getStarsHtml(results.Metascore, false));
 
     return results;
 }
 
 var displayBookResults = function (results){
-    bookCover.setAttribute("src", results.imageLinks.thumbnail);
-    bookTitle.textContent = results.title;
-    bookDescription.textContent = results.description;
-    bookRating.innerHTML = getStarsHtml(results.averageRating, true);
+    $(".book-cover").attr("src", results.imageLinks.thumbnail);
+    $(".book-title").text(results.title);
+    $(".book-description").text(results.description);
+    $(".book-rating").html(getStarsHtml(results.averageRating, true));
 
     return results;
 }
@@ -236,7 +221,7 @@ var displaySearchHistory = function() {
        var filteredSearchedTitles = [...new Set(recentSearchedTitles)];
 
        //clear old display content
-       searchHistoryContainerEl.innerHTML = "";
+       $('.search-history-items').html("");
 
        //loop through searchedCities array to display array but...
        for (i=0; i < filteredSearchedTitles.length; i++) {
@@ -267,10 +252,10 @@ var showDisplay = function (){
 displaySearchHistory();
 
 //add event listener to search history items
-searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+$('.search-history-items').on("click", buttonClickHandler)
 
 $(".modal-close").on("click", closeModal)
 $(".modal-background").on("click", closeModal);
 
 // add event listeners to forms
-searchFormEl.addEventListener('submit', formSubmitHandler);
+$(".search-form").on('submit', formSubmitHandler);
