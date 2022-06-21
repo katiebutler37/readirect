@@ -81,7 +81,7 @@ async function fetchMovieData(title) {
 
 async function fetchBookData(title) {
     
-    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
+    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?langRestrict=en&q=${title}`);
     let data = await response.json();
 
     return data.items[0].volumeInfo;
