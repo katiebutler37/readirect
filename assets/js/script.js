@@ -176,34 +176,34 @@ var bookResults = function (results){
     // round to nearest integer
     const rating = results.averageRating;
     
-    if (0 <= rating <= 0.5){
+    if (0 <= rating && rating <= 0.5){
         bookRating.innerHTML = "<i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (0.5 < rating <= 1){
+    if (0.5 < rating && rating <= 1){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i>";
     }
-    if (1 < rating <= 1.5){
+    if (1 < rating && rating <= 1.5){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (1.5 < rating <= 2){
+    if (1.5 < rating && rating <= 2){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (2 < rating <= 2.5){
+    if (2 < rating && rating <= 2.5){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (2.5 < rating <= 3){
+    if (2.5 < rating && rating <= 3){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (3 < rating <= 3.5){
+    if (3 < rating && rating <= 3.5){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (3.5 < rating <= 4){
+    if (3.5 < rating && rating <= 4){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
-    if (4 < rating <= 4.5){
+    if (4 < rating && rating <= 4.5){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star-half-stroke'></i>";
     }
-    if (4.5 < rating <= 5){
+    if (4.5 < rating && rating <= 5){
         bookRating.innerHTML = "<i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i><i class='fa-solid fa-star'></i>";
     }
 
