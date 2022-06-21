@@ -69,6 +69,7 @@ async function fetchBookData(title) {
 }
 
 function searchTitle(title) {
+  
 
     if (DEBUG) {
         // Do stuff with mock payloads
@@ -77,18 +78,53 @@ function searchTitle(title) {
         displayResultsTitle();
     }
     else {
+
+        let movieData = {}
+   
+ 
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
-            .then((data) => movieResults(data))
-            .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
-                fetchBookData(title)
-                .then((data) => bookResults(data))
+            .then((movie_data) => {
+                movieData = movieResults(movie_data)
+                return movieData;
+                
             })
-            .then((data) => compareResults(data))
-            .then(() => displayResultsTitle())
+            .then(() => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
+               
+                console.log(title)
+                let bookData = fetchBookData(title)
+                return bookData;
+            })
+            .then((bookData) => {
+                bookResults(bookData)
+                displayResultsTitle()
+                compareResults(movieData, bookData)
+            })
     }
 
 }
+
+var compareResults = function(movieData, bookData){
+
+    // We will highlight the movie results if their overall score is higher
+    var averageMovieRating = (movieData.Metascore / 10) / 2;
+    console.log(averageMovieRating);
+    // we will highlight the book results if their overall score is higher
+    var averageBookRating = bookData.averageRating;
+    console.log(averageBookRating);
+    if (averageBookRating > averageMovieRating){
+        $("#column-1").css("background", "linear-gradient(gold, white)");
+    }
+    if (averageMovieRating > averageBookRating){
+        $("#column-2").css("background", "linear-gradient(gold, white)");
+    }
+    if (averageBookRating === averageMovieRating){
+        $("#column-1").css("background", "linear-gradient(green, white)");
+        $("#column-2").css("background", "linear-gradient(green, white)");
+    }
+};
+
+
 
 
 var displayResultsTitle = function (){
@@ -205,16 +241,6 @@ var displaySearchHistory = function() {
 if (DEBUG) {
     searchTitle("A Clockwork Orange");
 }
-
-var compareResults = function(results){
-    // We will highlight the movie results if their overall score is higher
-    var averageMovieRating = (results.Metascore / 10) / 2;
-    console.log(averageMovieRating);
-    // we will highlight the book results if their overall score is higher
-    var averageBookRating = results.averageRating;
-    console.log(averageBookRating);
-};
-
 
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
