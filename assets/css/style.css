@@ -19,7 +19,7 @@ header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 9998;
     flex-wrap: wrap;
 }
 
@@ -120,12 +120,20 @@ main {
     color: white;
 }
 
+.modal {
+    z-index: 9999;
+}
+
 .modal-content {
     background-color: var(--tertiary-color);
     padding: 50px;
     border-radius: 5px;
     font-size: larger;
-    color: white;
+    color: black;
+}
+
+.modal-close {
+    color: black;
 }
 
 footer {

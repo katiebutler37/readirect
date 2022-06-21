@@ -29,6 +29,20 @@ const movieOptions = {
 	}
 };
 
+function errorNoMatch() {
+    console.log("search error");
+    $("#search-error").addClass("is-active");
+};
+
+function errorNoConnection() {
+    $("#server-error").addClass("is-active");
+};
+
+var closeModal = function (event) {
+    event.preventDefault();
+    $(".modal").removeClass("is-active");
+};
+
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
@@ -40,10 +54,10 @@ var formSubmitHandler = function(event) {
         // display the columns
         showDisplay();
         //pass title to be fetched
-      searchTitle(title);
+        searchTitle(title);
     } else {
-        //needs to be replaced with function to trigger a modal later
-      alert('Please enter a title');
+        //triggers an error modal
+        errorNoMatch();
     } 
 };
 
@@ -259,6 +273,9 @@ displaySearchHistory();
 
 //add event listener to search history items
 searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+
+$(".modal-close").on("click", closeModal)
+$(".modal-background").on("click", closeModal);
 
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
