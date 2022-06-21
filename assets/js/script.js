@@ -43,9 +43,14 @@ var formSubmitHandler = function(event) {
     } else {
         //needs to be replaced with function to trigger a modal later
       alert('Please enter a title');
-    }
+    } 
+};
 
-    
+var buttonClickHandler = function(event) {
+    //grab text from button clicked and give it back to original fetch function
+    var searchedTitles = event.target.textContent;
+    titleInputEl.value = searchedTitles;
+    searchTitle(searchedTitles);
 };
 
 async function fetchMovieData(title) {
@@ -217,5 +222,8 @@ var showDisplay = function (){
 
 //displays on load of page
 displaySearchHistory();
+
+//add event listener to search history items
+saveReviewButtonEl.addEventListener("click", buttonClickHandler)
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);
