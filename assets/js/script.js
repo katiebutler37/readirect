@@ -129,7 +129,7 @@ var displayResultsTitle = function (){
     //add updated array to local storage
     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
     displaySearchHistory();
-    
+
     //clear old input from form
     titleInputEl.value = "";
 }
@@ -248,7 +248,7 @@ if (DEBUG) {
 var showDisplay = function (){
     // reveal the columns display
     $(".columns").removeAttr('id');
-    // reposition the footer
+   // reposition the footer
     $("footer").css("position", "relative");
     // and hide the placeholder "Search A Title"
     $(".onload-display").css("display", "none");
