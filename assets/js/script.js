@@ -73,9 +73,19 @@ async function fetchMovieData(title) {
     try {
         let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
         let initialData = await initialResponse.json();
-    
+
+        if (initialData.Error === "Movie not found!") {
+            errorNoMatch();
+            return;
+        }
+
         let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
         let finalData = await finalResponse.json();
+
+        if (finalData.Error === "Movie not found!") {
+            errorNoMatch();
+            return;
+        }
     
         return finalData;
     }
@@ -86,10 +96,15 @@ async function fetchMovieData(title) {
 
 async function fetchBookData(title) {
     
-    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
-    let data = await response.json();
-
-    return data.items[0].volumeInfo;
+    try {
+        let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
+        let data = await response.json();
+    
+        return data.items[0].volumeInfo;
+    }
+    catch {
+        errorNoConnection();
+    }
      
 }
 
