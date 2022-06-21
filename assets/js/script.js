@@ -74,23 +74,18 @@ async function fetchMovieData(title) {
         let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
         let initialData = await initialResponse.json();
 
-        if (initialData.Error === "Movie not found!") {
-            errorNoMatch();
-            return;
-        }
-
         let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
         let finalData = await finalResponse.json();
-
-        if (finalData.Error === "Movie not found!") {
-            errorNoMatch();
-            return;
-        }
     
         return finalData;
     }
-    catch {
-        errorNoConnection();
+    catch(err) {
+        if (err.message === "Failed to fetch") {
+            errorNoConnection();
+        }
+        else {
+            errorNoMatch();
+        }
     }
 }
 
