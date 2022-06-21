@@ -31,13 +31,13 @@ const movieOptions = {
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
-    // display the columns
-    showDisplay();
-  
+    
     // get value from input element
     var title = titleInputEl.value.trim();
-  
+    
     if (title) {
+        // display the columns
+        showDisplay();
         //pass title to be fetched
       searchTitle(title);
     } else {
