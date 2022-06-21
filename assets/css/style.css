@@ -1,9 +1,13 @@
 :root {
     /* switch out for decided on colour palette */
-    --primary-color: rgb(232, 72, 70);
+    --primary-color: rgb(70, 81, 232);
     --secondary-color: black;
-    --tertiary-color: rgb(243, 243, 243);
+    --tertiary-color: rgb(215, 215, 215);
 
+}
+
+body {
+    background-color: var(--tertiary-color);
 }
 
 header {
