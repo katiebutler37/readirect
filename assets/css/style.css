@@ -1,8 +1,13 @@
 :root {
     /* switch out for decided on colour palette */
-    --primary-color: rgb(224, 221, 221);
+    --primary-color: rgb(208, 208, 208);
     --secondary-color: black;
-    --tertiary-color: red;
+    --tertiary-color: rgb(255, 255, 255);
+
+}
+
+body {
+    background-color: var(--tertiary-color);
 }
 
 header {
@@ -40,6 +45,7 @@ nav {
 
 form {
     font-size: 20px;
+    color: black;
 }
 
 main {
@@ -97,20 +103,22 @@ main {
     justify-content: space-around;
 }
 .search-history-item {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     margin: 8px;
     flex: 1;
     justify-content: center;
     display: flex;
     align-items: center;
     max-width: 200px;
+    color: white;
 }
 
 .modal-content {
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
     padding: 50px;
     border-radius: 5px;
     font-size: larger;
+    color: white;
 }
 
 footer {
@@ -119,6 +127,7 @@ footer {
     display: flex;
     justify-content: space-between;
     padding: 8px;
+    color: black;
     position: absolute;
     bottom: 0;
     width: 100%;
