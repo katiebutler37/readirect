@@ -36,7 +36,7 @@ nav {
     font-weight: bold;
     font-style: italic;
     font-size: 40px;
-    margin: 10px;
+    margin: 0 10px 10px 10px;
 }
 
 .brand a {
@@ -88,6 +88,7 @@ main {
     align-items: center;
     text-align: center;
     padding-bottom: 20px;
+    box-shadow: 10px 0 25px var(--secondary-color);
 }
 
 .book-cover {
