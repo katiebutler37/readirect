@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- links to font awesome kit containing icons for faster loading -->
+    <script src="https://kit.fontawesome.com/003f026d41.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="icon" href="https://cdn1.iconfinder.com/data/icons/education-line-icons-vol-1/65/43-512.png">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>READirect</title>
+</head>
+<body>
+    <header>
+        <h1 class="brand">
+            <!-- App brand title split up for styling purposes, set up to reload page on click by linking URL -->
+            <a href ="">READirect</a>
+        </h1>
+        <nav class="is-grouped">
+            <!-- nav heading linked to search history at the bottom of the page -->
+            <a id="saved-reviews-btn" class="button is-white is-rounded" href="#search-history">My Saved Reviews</a>  
+            <!-- search bar aligned to top right corner -->
+            <form class="search-form">
+                <label for="title">Search Title: </label>
+                <input type="text" placeholder="i.e. Gone Girl" name="title" id="title" class="form-input"/>
+                <!-- note: can append the "is-loading" class while data is getting fetched and remove it once displayed for a loading circle to replace the magnifying glass -->                   
+                <button class="button is-black is-rounded" type="submit" id="submitBtn">
+                    <!-- insert icon for magnifying glass -->
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        <section id="results">
+            <!-- dynamically insert title from input-->
+            
+                <!-- <p id="searched-title"></p>    -->
+        </section>
+
+        <!-- This will disappear once a search is made -->
+        <div class="onload-display">
+            <h3 class="onload-h3">Search A Title To Compare The Book & Movie</h3>
+        </div>
+        
+
+        <!-- hardcoded card container and card content to be replaced with js appended data -->
+        <!-- Responsiveness: Bulma's styling includes default column stacking at full width for any screensize less than tablets-->
+        <div class="columns" id="hidden-onload">
+            <!-- book review card -->
+            <div class="column" id="column-1">
+                <div class="card-container">
+                    <h3 class="subtitle is-four">Book Results</h3>
+                    <article class="card" id="card-1">
+                        <div class="img-container">
+                            <figure class="card-image is-2by3">
+                                <img class="cover book-cover" src="" alt="Book cover" />
+                            </figure>    
+                        </div>
+                        <div class="card-content">
+                            <h3 class="displayed-title title book-title"></h3>
+                            <!-- insert appropriate icons to display rating info (see if there is an icon endpoint, otherwise will have to code conditional statements to translate the rating number into icons) -->
+                            <h4 class="book-rating-source">Google Book Community Rating:</h4>
+                            <div class="book-rating">
+                            </div>
+                            <br>
+                            <p class="book-description">
+                            </p>
+                            <br>
+                            <!-- link to respective review page on goodreads site through URL endpoint -->
+                            <a class="button is-rounded is-link is-responsive more-book-btn">Read more reviews</a>
+                        </div>    
+                    </article> 
+                </div>    
+            </div>
+              <!-- movie review card -->
+              <div class=" column" id="column-2">
+                <div class="card-container">
+                <h3 class="subtitle is-four">Movie Results</h3>
+                <article class="card" id="card-2">
+                    <div class="img-container">
+                        <figure class="card-image is-2by3">
+                            <img class="cover movie-cover" src="" alt="Movie poster"/>
+                        </figure>    
+                    </div>
+                    <div class="card-content">
+                        <h3 class="displayed-title title movie-title"></h3>
+                        <!-- insert appropriate icons to display rating info (see if there is an icon endpoint, otherwise will have to code conditional statements to translate the rating number into icons) -->
+                        <h4 class="movie-rating-source">Metacritic Rating:</h4>
+                        <div class="movie-rating">
+                        </div>
+                        <br>
+                        <p class="movie-description">
+                        </p>
+                        <br>
+                        <!-- link to respective review page on goodreads site through URL endpoint -->
+                        <a class="button is-rounded is-link is-responsive more-movie-btn">Read more reviews</a>
+                    </div>
+                </article> 
+                </div>
+            </div> 
+        </div>
+        <section id="search-history">
+            <h2 class="title is-2">My Saved Reviews</h2>
+            <!-- flexbox wrapper to hold searched titles organized according to the mockup -->
+            <div class="search-history-items">
+            </div>
+        </section>
+      
+    </main>
+
+    <!-- MODALS for error handling linked to function that triggers display(since not allowed to use dom alerts) -->
+    <!-- to trigger display of modal add the "is-active class to the .modal container" -->
+    <div id="search-error" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p>Your search did not match any documents.</p>
+            <br>
+            <p>Suggestions:</p>
+            <ul>
+                <li>
+                    Make sure that all words are spelled correctly.
+                </li>
+                <li>
+                    Try different keywords.
+                </li>
+                <li>
+                    Try more general keywords.
+                </li>
+            </ul>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+      </div>
+
+      <div id="server-error" class="modal">
+        <div class="modal-background"></div>
+        <div class="modal-content">
+            <p>Error: Unable to connect to the server at this time. Please try again later.</p>
+            <button class="modal-close is-large" aria-label="close"></button>
+        </div>
+        
+      </div>
+
+    <footer>
+        <h2>Made by Fumi, Moshe, Ryan & Katie</h2>
+        <p>
+            &copy; 2022 READirect, Inc.
+        </p>
+    </footer>
+
+    <!-- linked to javascript files -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="./assets/js/constants.js"></script>
+    <script src="./assets/js/mock.js"></script>
+    <script src="./assets/js/script.js"></script>
+</body>
+</html>
