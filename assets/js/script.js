@@ -93,27 +93,76 @@ async function fetchBookData(title) {
 }
 
 function searchTitle(title) {
-
+  
     if (DEBUG) {
         // Do stuff with mock payloads
         displayMovieResults(moviePayload);
         displayBookResults(bookPayload);
         displayResultsTitle();
+        compareResults(moviePayload, bookPayload);
     }
     else {
+
+        let finalMovieData = {};
+        let finalBookData = {};
+   
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
-            .then((data) => displayMovieResults(data))
-            .then((data) => {
-                fetchBookData(data.Title) // query books api with movie result title 
-                .then((data) => displayBookResults(data))
+            .then((movie_data) => {
+                finalMovieData = displayMovieResults(movie_data);
+                return finalMovieData;
             })
-            .then(() => displayResultsTitle())
+            .then((movieData) => fetchBookData(movieData.Title)
+                .then((bookData) => {
+                    finalBookData = displayBookResults(bookData);
+                    displayResultsTitle();
+                    compareResults(finalMovieData, finalBookData)
+                })                
+            )
     }
 
 }
 
-// Display the results
+function addHighlight(element) {
+    element.css("box-sizing", "content-box");
+    element.css("border-width", "6px");
+    element.css("border-style", "solid");
+    element.css("border-image", "linear-gradient(to right bottom, #e9cf7b, #ffedb1)");
+    element.css("border-image-slice", "1");
+}
+
+function removeHighlight(element) {
+    element.css("box-sizing", "");
+    element.css("border-width", "");
+    element.css("border-style", "");
+    element.css("border-image", "");
+    element.css("border-image-slice", "");
+}
+
+var compareResults = function(movieData, bookData) {
+
+    var averageMovieRating = movieData.Metascore;
+    // Convert book rating to "out of 100" format
+    var averageBookRating = bookData.averageRating * 20; 
+
+    // Remove any comparison highlights currently showing
+    removeHighlight($("#card-1"));
+    removeHighlight($("#card-2"));
+
+    // Add highlight to medium with higher rating, or both if ratings are the same 
+    if (averageBookRating > averageMovieRating){
+        addHighlight($("#card-1"));
+    }
+    if (averageMovieRating > averageBookRating){
+        addHighlight($("#card-2"));
+    }
+    if (averageBookRating === averageMovieRating){
+        addHighlight($("#card-1"));
+        addHighlight($("#card-2"));
+    }
+};
+
+
 var displayResultsTitle = function (){
     //clear old display content
     $("#results").html("");
