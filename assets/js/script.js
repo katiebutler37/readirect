@@ -23,14 +23,6 @@ var moreMovieButtonEl = document.querySelector(".more-movie-btn");
 var moreBookButtonEl = document.querySelector(".more-book-btn");
 
 
-const movieOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'fc6b69c0damshf39a0c0e95d5241p10963bjsn7774c35cda52',
-		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-	}
-};
-
 function errorNoMatch() {
     console.log("search error");
     $("#search-error").addClass("is-active");
@@ -131,10 +123,10 @@ function searchTitle(title) {
     else {
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
-            .then((data) => displayMovieResults(data))
-            .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
-                fetchBookData(data.Title)
-                .then((data) => displayBookResults(data))
+            .then((data) => movieResults(data))
+            .then((data) => {
+                fetchBookData(data.Title) // query books api with movie result title 
+                .then((data) => bookResults(data))
             })
             .then(() => displayResultsTitle())
     }
