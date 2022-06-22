@@ -1,32 +1,30 @@
 // True for mockpayloads/auto-search, False for real fetching and normal app behaviour 
 const DEBUG = false;
 
-// Our title and search history items elements
-var titleInputEl = document.querySelector("#title");
-var searchHistoryContainerEl = document.querySelector('.search-history-items');
-
 
 function errorNoMatch() {
     console.log("search error");
     $("#search-error").addClass("is-active");
 };
 
+
 function errorNoConnection() {
     $("#server-error").addClass("is-active");
 };
 
-var closeModal = function (event) {
+
+function closeModal(event) {
     event.preventDefault();
     $(".modal").removeClass("is-active");
 };
 
 // The function which gets all of our functions moving
-var formSubmitHandler = function(event) {
+function formSubmitHandler(event) {
     // prevent page from refreshing
     event.preventDefault();
 
     const title = $('#title').val().trim();
-    
+
     if (title) {
         // display the columns
         showDisplay();
@@ -35,18 +33,18 @@ var formSubmitHandler = function(event) {
     } else {
         //triggers an error modal
         errorNoMatch();
-    } 
-};
+    }
+}
 
 // By clicking on one of the saved searches this function gets triggered
-var buttonClickHandler = function(event) {
+function buttonClickHandler(event) {
     //grab text from button clicked and give it back to original fetch function
     var searchedTitle = event.target.textContent;
-    titleInputEl.value = searchedTitle;
-    
+    $("#title").val(searchedTitle);
+
     searchTitle(searchedTitle);
     showDisplay();
-};
+}
 
 async function fetchMovieData(title) {
 
@@ -120,6 +118,7 @@ function searchTitle(title) {
 
 }
 
+
 function addHighlight(element) {
     element.css("box-sizing", "content-box");
     element.css("border-width", "6px");
@@ -127,6 +126,7 @@ function addHighlight(element) {
     element.css("border-image", "linear-gradient(to right bottom, #e9cf7b, #ffedb1)");
     element.css("border-image-slice", "1");
 }
+
 
 function removeHighlight(element) {
     element.css("box-sizing", "");
@@ -136,28 +136,29 @@ function removeHighlight(element) {
     element.css("border-image-slice", "");
 }
 
-var compareResults = function(movieData, bookData) {
+
+function compareResults(movieData, bookData) {
 
     var averageMovieRating = movieData.Metascore;
     // Convert book rating to "out of 100" format
-    var averageBookRating = bookData.averageRating * 20; 
+    var averageBookRating = bookData.averageRating * 20;
 
     // Remove any comparison highlights currently showing
     removeHighlight($("#card-1"));
     removeHighlight($("#card-2"));
 
     // Add highlight to medium with higher rating, or both if ratings are the same 
-    if (averageBookRating > averageMovieRating){
+    if (averageBookRating > averageMovieRating) {
         addHighlight($("#card-1"));
     }
-    if (averageMovieRating > averageBookRating){
+    if (averageMovieRating > averageBookRating) {
         addHighlight($("#card-2"));
     }
-    if (averageBookRating === averageMovieRating){
+    if (averageBookRating === averageMovieRating) {
         addHighlight($("#card-1"));
         addHighlight($("#card-2"));
     }
-};
+}
 
 
 function displayResultsTitle (){
@@ -165,7 +166,7 @@ function displayResultsTitle (){
     $("#results").html("");
 
     // get value from input element
-    var title = titleInputEl.value.trim();
+    var title = $("#title").val().trim();
 
     var titleArray = title.split(" ");
     for (var i=0; i < titleArray.length; i++) {
@@ -190,7 +191,7 @@ function displayResultsTitle (){
     displaySearchHistory();
 
     //clear old input from form
-    titleInputEl.value = "";
+    $("#title").val("");
 }
 
 // Our star rating system
@@ -235,18 +236,18 @@ function getStarsHtml(rating, isBook) {
 }
 
 // The movie data that will be displayed on the page
-var displayMovieResults = function (results){
+function displayMovieResults(results) {
     $(".movie-cover").attr("src", results.Poster);
     $(".movie-title").text(results.Title);
     $(".movie-description").text(results.Plot);
-    $(".movie-rating").html (getStarsHtml(results.Metascore, false));
+    $(".movie-rating").html(getStarsHtml(results.Metascore, false));
     $(".more-movie-btn").attr("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
 
     return results;
 }
 
 // The book data that will be displayed on the page
-var displayBookResults = function (results){
+function displayBookResults(results) {
     $(".book-cover").attr("src", results.imageLinks.thumbnail);
     $(".book-title").text(results.title);
     $(".book-description").text(results.description);
@@ -257,35 +258,32 @@ var displayBookResults = function (results){
 }
 
 // This function will ensure that our searches persist
-var displaySearchHistory = function() {
+function displaySearchHistory() {
     if (localStorage.length > 0) {
-       //grab stored array of searched cities from localStorage
-       var searchedTitles = JSON.parse(localStorage.getItem("searched-titles"));
-       //to sort from most-least recent (searched) changing the order of reading it
-       var recentSearchedTitles = searchedTitles.reverse();
-       //to remove any duplicates for final display version
-       var filteredSearchedTitles = [...new Set(recentSearchedTitles)];
+        //grab stored array of searched cities from localStorage
+        var searchedTitles = JSON.parse(localStorage.getItem("searched-titles"));
+        //to sort from most-least recent (searched) changing the order of reading it
+        var recentSearchedTitles = searchedTitles.reverse();
+        //to remove any duplicates for final display version
+        var filteredSearchedTitles = [...new Set(recentSearchedTitles)];
 
-       //clear old display content
-       $('.search-history-items').html("");
+        //clear old display content
+        $('.search-history-items').html("");
 
-       //loop through searchedCities array to display array but...
-       for (i=0; i < filteredSearchedTitles.length; i++) {
-           //...stop at index 9 to keep only the most recent 10 showing
-           if (i>=10) {
-               break;
-           }
-           searchHistoryContainerEl.innerHTML += "<button class='button is-rounded search-history-item'>" + filteredSearchedTitles[i] + "</button>"
-       };
-   };
-};
-
-if (DEBUG) {
-    searchTitle("A Clockwork Orange");
+        //loop through searchedCities array to display array but...
+        for (i = 0; i < filteredSearchedTitles.length; i++) {
+            //...stop at index 9 to keep only the most recent 10 showing
+            if (i >= 10) {
+                break;
+            }
+            const searchHistoryItemsHtml = $('.search-history-items').html();
+            $('.search-history-items').html(searchHistoryItemsHtml + "<button class='button is-rounded search-history-item'>" + filteredSearchedTitles[i] + "</button>");
+        };
+    };
 }
 
-function saveReview() {
 
+function saveReview() {
     //load searchedTitles (an array) from localStorage and turn strings back to objects
     var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
     //add the individal title item to the array of searched titles
@@ -301,29 +299,35 @@ function saveReview() {
 }
 
 // show the columns display and reposition the footer when the search button is clicked
-var showDisplay = function (){
+function showDisplay() {
     // reveal the columns display
     $(".columns").removeAttr('id');
-   // reposition the footer
+    // reposition the footer
     $("footer").css("position", "relative");
     // and hide the placeholder "Search A Title"
     $(".onload-display").css("display", "none");
-};
+}
 
-//displays on load of page
-displaySearchHistory();
+// event listener for search history items
+$('.search-history-items').on("click", buttonClickHandler);
 
-//add event listener to search history items
-searchHistoryContainerEl.addEventListener("click", buttonClickHandler);
+// event listener for modals
+$(".modal-close").on("click", closeModal)
+$(".modal-background").on("click", closeModal);
 
-//add event listener to save btn
+// event listeners for search form
+$(".search-form").on('submit', formSubmitHandler);
+
+// event listener for save btn
 $(document).on({
     "click": function () {
         saveReview();
 }}, '#save-btn');
 
-$(".modal-close").on("click", closeModal)
-$(".modal-background").on("click", closeModal);
-
-// add event listeners to forms
-$(".search-form").on('submit', formSubmitHandler);
+// event listener for document ready (page load)
+$(document).ready(() => {
+    displaySearchHistory();
+    if (DEBUG) {
+        searchTitle("A Clockwork Orange");
+    }
+})
