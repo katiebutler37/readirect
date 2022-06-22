@@ -123,25 +123,23 @@ function searchTitle(title) {
     }
     else {
 
-        let movieData = {}
+        let finalMovieData = {};
+        let finalBookData = {};
    
- 
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
             .then((movie_data) => {
-                movieData = movieResults(movie_data)
-                return movieData;
-                
+                finalMovieData = displayMovieResults(movie_data);
+                return finalBookData;
             })
-            .then(() => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
-                console.log(title)
-                let bookData = fetchBookData(title)
-                return bookData;
+            .then((movieData) => {
+                finalBookData = fetchBookData(movieData.Title)
+                return finalBookData;
             })
             .then((bookData) => {
-                bookResults(bookData)
+                displayBookResults(bookData)
                 displayResultsTitle()
-                compareResults(movieData, bookData)
+                compareResults(finalMovieData, finalBookData)
             })
     }
 
