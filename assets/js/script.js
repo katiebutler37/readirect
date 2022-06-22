@@ -149,8 +149,6 @@ var displayResultsTitle = function (){
     searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
     resultsContainerEl.appendChild(searchedTitleEl);
 
-   //may want load local storage array, push into array, and set updated search history array to local storage here
-
    //dynamically create save button here, add the necessary styling classes and also append to the results container
    var saveReviewButtonEl = document.createElement("button");
    saveReviewButtonEl.classList = "button is-success is-responsive is-rounded is-medium";
@@ -158,13 +156,7 @@ var displayResultsTitle = function (){
    saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
    //append to results container
    resultsContainerEl.appendChild(saveReviewButtonEl);
-
-    //load searchedCities (an array) from localStorage and turn strings back to objects
-    var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
-    //add the individal cityTitle item to the array of searched cities
-    searchedTitles.push(displayTitle);
-    //add updated array to local storage
-    localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+   
     displaySearchHistory();
 
     //clear old input from form
@@ -261,6 +253,18 @@ if (DEBUG) {
     searchTitle("A Clockwork Orange");
 }
 
+function saveReview() {
+
+     //load searchedTitles (an array) from localStorage and turn strings back to objects
+     var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
+     //add the individal title item to the array of searched titles
+     const searchedTitle = $("#searched-title").text().replace("Displaying results for: ", "");
+     
+     searchedTitles.push(searchedTitle);
+     //add updated array to local storage
+     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+}
+
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
     // reveal the columns display
@@ -275,7 +279,13 @@ var showDisplay = function (){
 displaySearchHistory();
 
 //add event listener to search history items
-searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+searchHistoryContainerEl.addEventListener("click", buttonClickHandler);
+
+//add event listener to save btn
+$(document).on({
+    "click": function () {
+        saveReview();
+}}, '#save-btn');
 
 $(".modal-close").on("click", closeModal)
 $(".modal-background").on("click", closeModal);
