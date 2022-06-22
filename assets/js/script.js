@@ -8,6 +8,7 @@ var searchHistoryContainerEl = document.querySelector('.search-history-items');
 var moreMovieButtonEl = document.querySelector(".more-movie-btn");
 var moreBookButtonEl = document.querySelector(".more-book-btn");
 
+var searchedTitleGlobal = "";
 
 function errorNoMatch() {
     console.log("search error");
@@ -125,11 +126,10 @@ var displayResultsTitle = function (){
         titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
     };
     var displayTitle = titleArray.join(" ");
+    searchedTitleGlobal = displayTitle;
 
     $("#searched-title").html("Displaying results for: " + displayTitle);
     $("#results").append($("#searched-title"));
-
-   //may want load local storage array, push into array, and set updated search history array to local storage here
 
    //dynamically create save button here, add the necessary styling classes and also append to the results container
    var saveReviewButtonEl = document.createElement("button");
@@ -138,13 +138,7 @@ var displayResultsTitle = function (){
    saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
    //append to results container
    $("#results").append(saveReviewButtonEl);
-
-    //load searchedCities (an array) from localStorage and turn strings back to objects
-    var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
-    //add the individal cityTitle item to the array of searched cities
-    searchedTitles.push(displayTitle);
-    //add updated array to local storage
-    localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+   
     displaySearchHistory();
 
     //clear old input from form
@@ -242,6 +236,20 @@ if (DEBUG) {
     searchTitle("A Clockwork Orange");
 }
 
+function saveReview() {
+
+     //load searchedTitles (an array) from localStorage and turn strings back to objects
+     var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
+     //add the individal title item to the array of searched titles
+    //  .replace("Displaying results for: ", "");
+    
+     searchedTitles.push(searchedTitleGlobal);
+     //add updated array to local storage
+     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+
+     displaySearchHistory();
+}
+
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
     // reveal the columns display
@@ -256,7 +264,13 @@ var showDisplay = function (){
 displaySearchHistory();
 
 //add event listener to search history items
-$('.search-history-items').on("click", buttonClickHandler)
+searchHistoryContainerEl.addEventListener("click", buttonClickHandler);
+
+//add event listener to save btn
+$(document).on({
+    "click": function () {
+        saveReview();
+}}, '#save-btn');
 
 $(".modal-close").on("click", closeModal)
 $(".modal-background").on("click", closeModal);
