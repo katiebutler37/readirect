@@ -5,14 +5,13 @@ const DEBUG = false;
 var movieCover = document.querySelector(".movie-cover");
 var movieTitle = document.querySelector(".movie-title");
 var movieRating = document.querySelector(".movie-rating");
-var movieReview1 = document.getElementById("movie-review-1");
-var movieReview2 = document.getElementById("movie-review-2");
-var movieReview3 = document.getElementById("movie-review-3");
+var movieDescription = document.querySelector(".movie-description");
 
 // HTML elements related to books 
 var bookCover = document.querySelector(".book-cover");
 var bookTitle = document.querySelector(".book-title");
 var bookRating = document.querySelector(".book-rating");
+var bookDescription = document.querySelector(".book-description");
 
 var titleInputEl = document.querySelector("#title");
 var searchFormEl = document.querySelector(".search-form");
@@ -20,12 +19,22 @@ var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
-const movieOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'fc6b69c0damshf39a0c0e95d5241p10963bjsn7774c35cda52',
-		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-	}
+var moreMovieButtonEl = document.querySelector(".more-movie-btn");
+var moreBookButtonEl = document.querySelector(".more-book-btn");
+
+
+function errorNoMatch() {
+    console.log("search error");
+    $("#search-error").addClass("is-active");
+};
+
+function errorNoConnection() {
+    $("#server-error").addClass("is-active");
+};
+
+var closeModal = function (event) {
+    event.preventDefault();
+    $(".modal").removeClass("is-active");
 };
 
 var formSubmitHandler = function(event) {
@@ -34,37 +43,72 @@ var formSubmitHandler = function(event) {
     
     // get value from input element
     var title = titleInputEl.value.trim();
+
+    var movieTitleForURL = title.replace(/ /g, "_");
+
+    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
+
+    var bookTitleForURL = title.replace(/ /g,"-");
+
+    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
     
     if (title) {
         // display the columns
         showDisplay();
         //pass title to be fetched
-      searchTitle(title);
+        searchTitle(title);
     } else {
-        //needs to be replaced with function to trigger a modal later
-      alert('Please enter a title');
-    }
+        //triggers an error modal
+        errorNoMatch();
+    } 
+};
 
+var buttonClickHandler = function(event) {
+    //grab text from button clicked and give it back to original fetch function
+    var searchedTitle = event.target.textContent;
+    titleInputEl.value = searchedTitle;
     
+    searchTitle(searchedTitle);
+    showDisplay();
 };
 
 async function fetchMovieData(title) {
 
-    let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
-    let initialData = await initialResponse.json();
+    try {
+        let initialResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?s=${title}&r=json&page=1`, movieOptions);
+        let initialData = await initialResponse.json();
 
-    let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
-    let finalData = await finalResponse.json();
-
-    return finalData;
+        let finalResponse = await fetch(`https://movie-database-alternative.p.rapidapi.com/?r=json&i=${initialData.Search[0].imdbID}`, movieOptions);
+        let finalData = await finalResponse.json();
+    
+        return finalData;
+    }
+    catch(err) {
+        if (err.message === "Failed to fetch") {
+            errorNoConnection();
+        }
+        else {
+            errorNoMatch();
+        }
+    }
 }
 
 async function fetchBookData(title) {
     
-    let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
-    let data = await response.json();
-
-    return data.items[0].volumeInfo;
+    try {
+        let response = await fetch(`https://www.googleapis.com/books/v1/volumes?q=${title}`);
+        let data = await response.json();
+    
+        return data.items[0].volumeInfo;
+    }
+    catch(err) {
+        if (err.message === "Failed to fetch") {
+            errorNoConnection();
+        }
+        else {
+            errorNoMatch();
+        }
+    }
      
 }
 
@@ -73,8 +117,8 @@ function searchTitle(title) {
 
     if (DEBUG) {
         // Do stuff with mock payloads
-        movieResults(moviePayload);
-        bookResults(bookPayload);
+        displayMovieResults(moviePayload);
+        displayBookResults(bookPayload);
         displayResultsTitle();
     }
     else {
@@ -90,7 +134,6 @@ function searchTitle(title) {
                 
             })
             .then(() => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
-               
                 console.log(title)
                 let bookData = fetchBookData(title)
                 return bookData;
@@ -160,59 +203,72 @@ var displayResultsTitle = function (){
     //add updated array to local storage
     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
     displaySearchHistory();
+
+    //clear old input from form
+    titleInputEl.value = "";
 }
 
 
-var movieResults = function (results){
+function getStarsHtml(rating, isBook) {
+
+    if (isBook) {
+        // change rating to 'out of 100' format
+        rating = rating * 20;
+    }
+
+    if (0 <= rating && rating <= 10){
+        return STARS['0.5'];
+    }
+    if (10 < rating && rating <= 20){
+        return STARS['1.0'];
+    }
+    if (20 < rating && rating <= 30){
+        return STARS['1.5'];
+    }
+    if (30 < rating && rating <= 40){
+        return STARS['2.0'];
+    }
+    if (40 < rating && rating <= 50){
+        return STARS['2.5'];
+    }
+    if (50 < rating && rating <= 60){
+        return STARS['3.0'];
+    }
+    if (60 < rating && rating <= 70){
+        return STARS['3.5'];
+    }
+    if (70 < rating && rating <= 80){
+        return STARS['4.0'];
+    }
+    if (80 < rating && rating <= 90){
+        return STARS['4.5'];
+    }
+    if (90 < rating && rating <= 100){
+        return STARS['5.0'];
+    }
+
+}
+
+var displayMovieResults = function (results){
     movieCover.setAttribute("src", results.Poster);
     movieTitle.textContent = results.Title;
-    // this is our Star rating system based on the MetaScore
-    if (results.Metascore <= 20){
-        movieRating.textContent = "⭐";
-    }
-    if (results.Metascore > 20 && results.Metascore <= 40){
-        movieRating.textContent = "⭐⭐";
-    }
-    if (results.Metascore > 40 && results.Metascore <= 60){
-        movieRating.textContent = "⭐⭐⭐";
-    }
-    if (results.Metascore > 60 && results.Metascore <= 80){
-        movieRating.textContent = "⭐⭐⭐⭐";
-    }
-    if (results.Metascore > 80 && results.Metascore <= 100){
-        movieRating.textContent = "⭐⭐⭐⭐⭐";
-    }
-    movieReview1.textContent = results.Ratings[0].Source + " (IMDB) | " + results.Ratings[0].Value;
-    movieReview2.textContent = results.Ratings[1].Source + " | " + results.Ratings[1].Value;
-    movieReview3.textContent = results.Ratings[2].Source + " | " + results.Ratings[2].Value;
-    
-    return results;
+    movieDescription.textContent = results.Plot;
+    movieRating.innerHTML = getStarsHtml(results.Metascore, false);
 
+    moreMovieButtonEl.setAttribute("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
+
+    return results;
 }
 
-var bookResults = function (results){
+var displayBookResults = function (results){
     bookCover.setAttribute("src", results.imageLinks.thumbnail);
     bookTitle.textContent = results.title;
-
-    // round to nearest integer
-    const rating = Math.round(results.averageRating);
+    bookDescription.textContent = results.description;
+    bookRating.innerHTML = getStarsHtml(results.averageRating, true);
     
-    if (rating === 1){
-        movieRating.textContent = "⭐";
-    }
-    if (rating === 2){
-        movieRating.textContent = "⭐⭐";
-    }
-    if (rating === 3){
-        movieRating.textContent = "⭐⭐⭐";
-    }
-    if (rating === 4){
-        movieRating.textContent = "⭐⭐⭐⭐";
-    }
-    if (rating === 5){
-        movieRating.textContent = "⭐⭐⭐⭐⭐";
-    }
+    moreBookButtonEl.setAttribute("href", results.infoLink);
 
+    return results;
 }
 
 var displaySearchHistory = function() {
@@ -245,8 +301,8 @@ if (DEBUG) {
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
     // reveal the columns display
-    $("#hidden-onload").css("display", "flex");
-    // reposition the footer
+    $(".columns").removeAttr('id');
+   // reposition the footer
     $("footer").css("position", "relative");
     // and hide the placeholder "Search A Title"
     $(".onload-display").css("display", "none");
@@ -254,5 +310,12 @@ var showDisplay = function (){
 
 //displays on load of page
 displaySearchHistory();
+
+//add event listener to search history items
+searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+
+$(".modal-close").on("click", closeModal)
+$(".modal-background").on("click", closeModal);
+
 // add event listeners to forms
 searchFormEl.addEventListener('submit', formSubmitHandler);

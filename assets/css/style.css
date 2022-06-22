@@ -1,8 +1,13 @@
 :root {
     /* switch out for decided on colour palette */
-    --primary-color: rgb(224, 221, 221);
+    --primary-color: rgb(208, 208, 208);
     --secondary-color: black;
-    --tertiary-color: red;
+    --tertiary-color: rgb(255, 255, 255);
+
+}
+
+body {
+    background-color: var(--tertiary-color);
 }
 
 header {
@@ -14,7 +19,7 @@ header {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    z-index: 9999;
+    z-index: 9998;
     flex-wrap: wrap;
 }
 
@@ -31,7 +36,7 @@ nav {
     font-weight: bold;
     font-style: italic;
     font-size: 40px;
-    margin: 10px;
+    margin: 0 10px 10px 10px;
 }
 
 .brand a {
@@ -40,6 +45,7 @@ nav {
 
 form {
     font-size: 20px;
+    color: black;
 }
 
 main {
@@ -51,6 +57,7 @@ main {
 .onload-display {
     display: block;
     text-align: center;
+    opacity: 50%;
 }
 
 #hidden-onload {
@@ -64,6 +71,7 @@ main {
     margin: auto 30px 40px 30px;
     font-size: 26px;
 }
+
 .fa-check {
     margin: 4px;
 }
@@ -80,11 +88,25 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+    padding-bottom: 20px;
 }
 
+.book-cover {
+    min-width: 180px;
+    flex-grow: inherit;
+}
 
 .img-container {
     margin: 50px;
+}
+
+.movie-description, .book-description {
+    font-size: medium;
+}
+
+.card h4 {
+    font-size: small;
 }
 
 #search-history {
@@ -96,21 +118,32 @@ main {
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
 .search-history-item {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     margin: 8px;
     flex: 1;
     justify-content: center;
     display: flex;
     align-items: center;
     max-width: 200px;
+    color: white;
+}
+
+.modal {
+    z-index: 9999;
 }
 
 .modal-content {
-    background-color: var(--primary-color);
+    background-color: var(--tertiary-color);
     padding: 50px;
     border-radius: 5px;
     font-size: larger;
+    color: black;
+}
+
+.modal-close {
+    color: black;
 }
 
 footer {
@@ -119,25 +152,26 @@ footer {
     display: flex;
     justify-content: space-between;
     padding: 8px;
+    color: black;
     position: absolute;
     bottom: 0;
     width: 100%;
 }
 
 /* MEDIA QUERY FOR SMALLER DESKTOP SCREENS AND SMALLER */
-@media screen and (max-width: 980px) {
-}
-  
+@media screen and (max-width: 980px) {}
+
 /* MEDIA QUERY FOR TABLETS AND SMALLER */
 @media screen and (max-width: 768px) {
     #saved-reviews-btn {
         display: none;
     }
+
     .brand {
         font-size: 32px;
     }
 }
-  
+
 /* MEDIA QUERY FOR MOBILE PHONES AND SMALLER */
 @media screen and (max-width: 575px) {
     header {
@@ -145,15 +179,19 @@ footer {
         text-align: center;
         height: fit-content;
     }
-#results {
-    font-size: 18px;
-}
-#search-history {
-    text-align: center;
-}
-#search-history h2 {
-    font-size: 22px;
-}
+
+    #results {
+        font-size: 18px;
+    }
+
+    #search-history {
+        text-align: center;
+    }
+
+    #search-history h2 {
+        font-size: 22px;
+    }
+
     footer {
         font-size: 12px;
     }
