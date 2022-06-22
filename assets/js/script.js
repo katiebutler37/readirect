@@ -123,26 +123,42 @@ function searchTitle(title) {
 
 }
 
+function addHighlight(element) {
+    element.css("box-sizing", "content-box");
+    element.css("border-width", "6px");
+    element.css("border-style", "solid");
+    element.css("border-image", "linear-gradient(to right bottom, #e9cf7b, #ffedb1)");
+    element.css("border-image-slice", "1");
+}
+
+function removeHighlight(element) {
+    element.css("box-sizing", "");
+    element.css("border-width", "");
+    element.css("border-style", "");
+    element.css("border-image", "");
+    element.css("border-image-slice", "");
+}
+
 var compareResults = function(movieData, bookData) {
 
     var averageMovieRating = movieData.Metascore;
     // Convert book rating to "out of 100" format
     var averageBookRating = bookData.averageRating * 20; 
 
-    // Clear any comparison highlights currently showing
-    $("#card-1").css("box-shadow", "10px 0px 25px rgba(0, 0, 0, 0.527)")
-    $("#card-2").css("box-shadow", "10px 0px 25px rgba(0, 0, 0, 0.527)")
+    // Remove any comparison highlights currently showing
+    removeHighlight($("#card-1"));
+    removeHighlight($("#card-2"));
 
-    // Apply highlight to medium with higher rating, or both if ratings are the same 
+    // Add highlight to medium with higher rating, or both if ratings are the same 
     if (averageBookRating > averageMovieRating){
-        $("#card-1").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
+        addHighlight($("#card-1"));
     }
     if (averageMovieRating > averageBookRating){
-        $("#card-2").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
+        addHighlight($("#card-2"));
     }
     if (averageBookRating === averageMovieRating){
-        $("#card-1").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
-        $("#card-2").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
+        addHighlight($("#card-1"));
+        addHighlight($("#card-2"));
     }
 };
 
