@@ -8,8 +8,6 @@ var searchHistoryContainerEl = document.querySelector('.search-history-items');
 var moreMovieButtonEl = document.querySelector(".more-movie-btn");
 var moreBookButtonEl = document.querySelector(".more-book-btn");
 
-var searchedTitleGlobal = "";
-
 function errorNoMatch() {
     console.log("search error");
     $("#search-error").addClass("is-active");
@@ -163,7 +161,7 @@ var compareResults = function(movieData, bookData) {
 };
 
 
-var displayResultsTitle = function (){
+function displayResultsTitle (){
     //clear old display content
     $("#results").html("");
 
@@ -175,10 +173,12 @@ var displayResultsTitle = function (){
         titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
     };
     var displayTitle = titleArray.join(" ");
-    searchedTitleGlobal = displayTitle;
 
-    $("#searched-title").html("Displaying results for: " + displayTitle);
-    $("#results").append($("#searched-title"));
+    var searchedTitleEl = $("<p>")
+        .text("Displaying results for: " + displayTitle)
+        .attr('id', 'searched-title')        
+    
+    $('#results').append(searchedTitleEl);
 
    //dynamically create save button here, add the necessary styling classes and also append to the results container
    var saveReviewButtonEl = document.createElement("button");
@@ -287,16 +287,18 @@ if (DEBUG) {
 
 function saveReview() {
 
-     //load searchedTitles (an array) from localStorage and turn strings back to objects
-     var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
-     //add the individal title item to the array of searched titles
+    //load searchedTitles (an array) from localStorage and turn strings back to objects
+    var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
+    //add the individal title item to the array of searched titles
     //  .replace("Displaying results for: ", "");
     
-     searchedTitles.push(searchedTitleGlobal);
-     //add updated array to local storage
-     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+    const searchedTitle = $("#searched-title").text().replace("Displaying results for: ", "");
 
-     displaySearchHistory();
+    searchedTitles.push(searchedTitle);
+    //add updated array to local storage
+    localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+
+    displaySearchHistory();
 }
 
 // show the columns display and reposition the footer when the search button is clicked
