@@ -242,8 +242,7 @@ var displayMovieResults = function (results){
     $(".movie-title").text(results.Title);
     $(".movie-description").text(results.Plot);
     $(".movie-rating").html (getStarsHtml(results.Metascore, false));
-
-    moreMovieButtonEl.setAttribute("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
+    $(".more-movie-btn").attr("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
 
     return results;
 }
@@ -254,6 +253,7 @@ var displayBookResults = function (results){
     $(".book-title").text(results.title);
     $(".book-description").text(results.description);
     $(".book-rating").html(getStarsHtml(results.averageRating, true));
+    $(".more-book-btn").attr("href", results.infoLink);
 
     return results;
 }
