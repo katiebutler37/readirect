@@ -21,6 +21,7 @@ header {
     top: 0;
     z-index: 9998;
     flex-wrap: wrap;
+    opacity: 90%;
 }
 
 nav {
@@ -90,6 +91,7 @@ main {
     align-items: center;
     text-align: center;
     padding-bottom: 20px;
+    box-shadow: 10px 0px 25px rgba(0, 0, 0, 0.527);
 }
 
 .book-cover {

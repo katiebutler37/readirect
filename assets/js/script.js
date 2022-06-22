@@ -8,6 +8,7 @@ var searchHistoryContainerEl = document.querySelector('.search-history-items');
 var moreMovieButtonEl = document.querySelector(".more-movie-btn");
 var moreBookButtonEl = document.querySelector(".more-book-btn");
 
+var searchedTitleGlobal = "";
 
 function errorNoMatch() {
     console.log("search error");
@@ -125,6 +126,7 @@ var displayResultsTitle = function (){
         titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
     };
     var displayTitle = titleArray.join(" ");
+    searchedTitleGlobal = displayTitle;
 
     $("#searched-title").html("Displaying results for: " + displayTitle);
     $("#results").append($("#searched-title"));
@@ -135,7 +137,7 @@ var displayResultsTitle = function (){
    saveReviewButtonEl.setAttribute("id", "save-btn");
    saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
    //append to results container
-   resultsContainerEl.appendChild(saveReviewButtonEl);
+   $("#results").append(saveReviewButtonEl);
    
     displaySearchHistory();
 
@@ -239,11 +241,13 @@ function saveReview() {
      //load searchedTitles (an array) from localStorage and turn strings back to objects
      var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
      //add the individal title item to the array of searched titles
-     const searchedTitle = $("#searched-title").text().replace("Displaying results for: ", "");
-     
-     searchedTitles.push(searchedTitle);
+    //  .replace("Displaying results for: ", "");
+    
+     searchedTitles.push(searchedTitleGlobal);
      //add updated array to local storage
      localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+
+     displaySearchHistory();
 }
 
 // show the columns display and reposition the footer when the search button is clicked
