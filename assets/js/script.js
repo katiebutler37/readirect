@@ -123,10 +123,10 @@ function searchTitle(title) {
     else {
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
-            .then((data) => movieResults(data))
+            .then((data) => displayMovieResults(data))
             .then((data) => {
                 fetchBookData(data.Title) // query books api with movie result title 
-                .then((data) => bookResults(data))
+                .then((data) => displayBookResults(data))
             })
             .then(() => displayResultsTitle())
     }
