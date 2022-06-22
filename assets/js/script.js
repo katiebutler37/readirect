@@ -27,6 +27,8 @@ var closeModal = function (event) {
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
+
+    const title = $('#title').val().trim();
     
     if (title) {
         // display the columns
