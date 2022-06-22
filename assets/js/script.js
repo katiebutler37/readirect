@@ -5,8 +5,6 @@ const DEBUG = false;
 var titleInputEl = document.querySelector("#title");
 var searchHistoryContainerEl = document.querySelector('.search-history-items');
 
-var moreMovieButtonEl = document.querySelector(".more-movie-btn");
-var moreBookButtonEl = document.querySelector(".more-book-btn");
 
 function errorNoMatch() {
     console.log("search error");
