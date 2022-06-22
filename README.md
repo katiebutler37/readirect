@@ -11,6 +11,11 @@
 - Bulma
 - jQuery
 
+## APIs
+
+- Google Books
+- Move Database Alternative (IMDb-based)
+
 ### Contributors
 
 - [Moshe](https://github.com/Moshe-jpg)
