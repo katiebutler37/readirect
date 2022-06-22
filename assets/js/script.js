@@ -5,14 +5,9 @@ const DEBUG = false;
 var titleInputEl = document.querySelector("#title");
 var searchHistoryContainerEl = document.querySelector('.search-history-items');
 
-// Our API key and host for the movie database
-const movieOptions = {
-	method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'fc6b69c0damshf39a0c0e95d5241p10963bjsn7774c35cda52',
-		'X-RapidAPI-Host': 'movie-database-alternative.p.rapidapi.com'
-	}
-};
+var moreMovieButtonEl = document.querySelector(".more-movie-btn");
+var moreBookButtonEl = document.querySelector(".more-book-btn");
+
 
 function errorNoMatch() {
     console.log("search error");
@@ -35,6 +30,14 @@ var formSubmitHandler = function(event) {
     
     // get value from input element
     var title = titleInputEl.value.trim();
+
+    var movieTitleForURL = title.replace(/ /g, "_");
+
+    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
+
+    var bookTitleForURL = title.replace(/ /g,"-");
+
+    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
     
     if (title) {
         // display the columns
@@ -52,6 +55,7 @@ var buttonClickHandler = function(event) {
     //grab text from button clicked and give it back to original fetch function
     var searchedTitle = event.target.textContent;
     titleInputEl.value = searchedTitle;
+    
     searchTitle(searchedTitle);
     showDisplay();
 };
@@ -108,8 +112,8 @@ function searchTitle(title) {
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
             .then((data) => displayMovieResults(data))
-            .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
-                fetchBookData(title)
+            .then((data) => {
+                fetchBookData(data.Title) // query books api with movie result title 
                 .then((data) => displayBookResults(data))
             })
             .then(() => displayResultsTitle())
@@ -203,6 +207,8 @@ var displayMovieResults = function (results){
     $(".movie-title").text(results.Title);
     $(".movie-description").text(results.Plot);
     $(".movie-rating").html (getStarsHtml(results.Metascore, false));
+
+    moreMovieButtonEl.setAttribute("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
 
     return results;
 }

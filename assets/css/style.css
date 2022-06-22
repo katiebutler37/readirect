@@ -90,7 +90,6 @@ main {
     align-items: center;
     text-align: center;
     padding-bottom: 20px;
-    box-shadow: 10px 0 25px var(--secondary-color);
 }
 
 .book-cover {
