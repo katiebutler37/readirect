@@ -19,12 +19,8 @@ var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
-var rottenTomatoesURL = "https://www.rottentomatoes.com/m/";
-var bookMarksURL = "https://bookmarks.reviews/reviews/"
-
 var moreMovieButtonEl = document.querySelector(".more-movie-btn");
 var moreBookButtonEl = document.querySelector(".more-book-btn");
-
 
 
 const movieOptions = {
@@ -80,13 +76,6 @@ var buttonClickHandler = function(event) {
     var searchedTitle = event.target.textContent;
     titleInputEl.value = searchedTitle;
     
-    var movieTitleForURL = title.replace(/ /g, "_");
-
-    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
-
-    var bookTitleForURL = title.replace(/ /g,"-");
-
-    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
     searchTitle(searchedTitle);
     showDisplay();
 };
@@ -144,7 +133,7 @@ function searchTitle(title) {
         fetchMovieData(title)
             .then((data) => displayMovieResults(data))
             .then((data) => { // 'data' here is the movie data, ready to be fed into the book fetching below, if desired 
-                fetchBookData(title)
+                fetchBookData(data.Title)
                 .then((data) => displayBookResults(data))
             })
             .then(() => displayResultsTitle())
@@ -237,6 +226,8 @@ var displayMovieResults = function (results){
     movieDescription.textContent = results.Plot;
     movieRating.innerHTML = getStarsHtml(results.Metascore, false);
 
+    moreMovieButtonEl.setAttribute("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
+
     return results;
 }
 
@@ -245,6 +236,8 @@ var displayBookResults = function (results){
     bookTitle.textContent = results.title;
     bookDescription.textContent = results.description;
     bookRating.innerHTML = getStarsHtml(results.averageRating, true);
+    
+    moreBookButtonEl.setAttribute("href", results.infoLink);
 
     return results;
 }
