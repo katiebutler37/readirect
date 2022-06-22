@@ -21,7 +21,7 @@
 ### Page Preview
 
 <!-- fill in once complete -->
-![READirect](./assets/images) 
+![READirect](./images/ss-1.png) 
 
 ### Link to Application
 
