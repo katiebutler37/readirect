@@ -28,17 +28,6 @@ var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
     
-    // get value from input element
-    var title = titleInputEl.value.trim();
-
-    var movieTitleForURL = title.replace(/ /g, "_");
-
-    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
-
-    var bookTitleForURL = title.replace(/ /g,"-");
-
-    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
-    
     if (title) {
         // display the columns
         showDisplay();
