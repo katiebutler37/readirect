@@ -19,6 +19,9 @@ var searchedTitleEl = document.querySelector("#searched-title");
 var resultsContainerEl = document.querySelector("#results");
 var searchHistoryContainerEl = document.querySelector('.search-history-items')
 
+var moreMovieButtonEl = document.querySelector(".more-movie-btn");
+var moreBookButtonEl = document.querySelector(".more-book-btn");
+
 
 function errorNoMatch() {
     console.log("search error");
@@ -40,6 +43,14 @@ var formSubmitHandler = function(event) {
     
     // get value from input element
     var title = titleInputEl.value.trim();
+
+    var movieTitleForURL = title.replace(/ /g, "_");
+
+    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
+
+    var bookTitleForURL = title.replace(/ /g,"-");
+
+    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
     
     if (title) {
         // display the columns
@@ -56,6 +67,7 @@ var buttonClickHandler = function(event) {
     //grab text from button clicked and give it back to original fetch function
     var searchedTitle = event.target.textContent;
     titleInputEl.value = searchedTitle;
+    
     searchTitle(searchedTitle);
     showDisplay();
 };
@@ -206,6 +218,8 @@ var displayMovieResults = function (results){
     movieDescription.textContent = results.Plot;
     movieRating.innerHTML = getStarsHtml(results.Metascore, false);
 
+    moreMovieButtonEl.setAttribute("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
+
     return results;
 }
 
@@ -214,6 +228,8 @@ var displayBookResults = function (results){
     bookTitle.textContent = results.title;
     bookDescription.textContent = results.description;
     bookRating.innerHTML = getStarsHtml(results.averageRating, true);
+    
+    moreBookButtonEl.setAttribute("href", results.infoLink);
 
     return results;
 }
