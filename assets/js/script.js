@@ -1,27 +1,14 @@
 // True for mockpayloads/auto-search, False for real fetching and normal app behaviour 
 const DEBUG = false;
 
-// Our Movie card variables which will hold the fetched data
-var movieCover = document.querySelector(".movie-cover");
-var movieTitle = document.querySelector(".movie-title");
-var movieRating = document.querySelector(".movie-rating");
-var movieDescription = document.querySelector(".movie-description");
-
-// HTML elements related to books 
-var bookCover = document.querySelector(".book-cover");
-var bookTitle = document.querySelector(".book-title");
-var bookRating = document.querySelector(".book-rating");
-var bookDescription = document.querySelector(".book-description");
-
+// Our title and search history items elements
 var titleInputEl = document.querySelector("#title");
-var searchFormEl = document.querySelector(".search-form");
-var searchedTitleEl = document.querySelector("#searched-title");
-var resultsContainerEl = document.querySelector("#results");
-var searchHistoryContainerEl = document.querySelector('.search-history-items')
+var searchHistoryContainerEl = document.querySelector('.search-history-items');
 
 var moreMovieButtonEl = document.querySelector(".more-movie-btn");
 var moreBookButtonEl = document.querySelector(".more-book-btn");
 
+var searchedTitleGlobal = "";
 
 function errorNoMatch() {
     console.log("search error");
@@ -37,20 +24,12 @@ var closeModal = function (event) {
     $(".modal").removeClass("is-active");
 };
 
+// The function which gets all of our functions moving
 var formSubmitHandler = function(event) {
     // prevent page from refreshing
     event.preventDefault();
-    
-    // get value from input element
-    var title = titleInputEl.value.trim();
 
-    var movieTitleForURL = title.replace(/ /g, "_");
-
-    moreMovieButtonEl.setAttribute("href", rottenTomatoesURL + movieTitleForURL);
-
-    var bookTitleForURL = title.replace(/ /g,"-");
-
-    moreBookButtonEl.setAttribute("href", bookMarksURL + bookTitleForURL);
+    const title = $('#title').val().trim();
     
     if (title) {
         // display the columns
@@ -63,6 +42,7 @@ var formSubmitHandler = function(event) {
     } 
 };
 
+// By clicking on one of the saved searches this function gets triggered
 var buttonClickHandler = function(event) {
     //grab text from button clicked and give it back to original fetch function
     var searchedTitle = event.target.textContent;
@@ -166,11 +146,9 @@ var compareResults = function(movieData, bookData){
 };
 
 
-
-
 var displayResultsTitle = function (){
     //clear old display content
-    resultsContainerEl.innerHTML = "";
+    $("#results").html("");
 
     // get value from input element
     var title = titleInputEl.value.trim();
@@ -180,11 +158,10 @@ var displayResultsTitle = function (){
         titleArray[i] = titleArray[i].charAt(0).toUpperCase() + titleArray[i].slice(1).toLowerCase()
     };
     var displayTitle = titleArray.join(" ");
+    searchedTitleGlobal = displayTitle;
 
-    searchedTitleEl.innerHTML = "Displaying results for: " + displayTitle;
-    resultsContainerEl.appendChild(searchedTitleEl);
-
-   //may want load local storage array, push into array, and set updated search history array to local storage here
+    $("#searched-title").html("Displaying results for: " + displayTitle);
+    $("#results").append($("#searched-title"));
 
    //dynamically create save button here, add the necessary styling classes and also append to the results container
    var saveReviewButtonEl = document.createElement("button");
@@ -192,21 +169,15 @@ var displayResultsTitle = function (){
    saveReviewButtonEl.setAttribute("id", "save-btn");
    saveReviewButtonEl.innerHTML = "<i class='fa-solid fa-check'></i>Save Review";
    //append to results container
-   resultsContainerEl.appendChild(saveReviewButtonEl);
-
-    //load searchedCities (an array) from localStorage and turn strings back to objects
-    var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
-    //add the individal cityTitle item to the array of searched cities
-    searchedTitles.push(displayTitle);
-    //add updated array to local storage
-    localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+   $("#results").append(saveReviewButtonEl);
+   
     displaySearchHistory();
 
     //clear old input from form
     titleInputEl.value = "";
 }
 
-
+// Our star rating system
 function getStarsHtml(rating, isBook) {
 
     if (isBook) {
@@ -247,28 +218,29 @@ function getStarsHtml(rating, isBook) {
 
 }
 
+// The movie data that will be displayed on the page
 var displayMovieResults = function (results){
-    movieCover.setAttribute("src", results.Poster);
-    movieTitle.textContent = results.Title;
-    movieDescription.textContent = results.Plot;
-    movieRating.innerHTML = getStarsHtml(results.Metascore, false);
+    $(".movie-cover").attr("src", results.Poster);
+    $(".movie-title").text(results.Title);
+    $(".movie-description").text(results.Plot);
+    $(".movie-rating").html (getStarsHtml(results.Metascore, false));
 
     moreMovieButtonEl.setAttribute("href", `https://www.imdb.com/title/${results.imdbID}/criticreviews?ref_=tt_ov_rt`);
 
     return results;
 }
 
+// The book data that will be displayed on the page
 var displayBookResults = function (results){
-    bookCover.setAttribute("src", results.imageLinks.thumbnail);
-    bookTitle.textContent = results.title;
-    bookDescription.textContent = results.description;
-    bookRating.innerHTML = getStarsHtml(results.averageRating, true);
-    
-    moreBookButtonEl.setAttribute("href", results.infoLink);
+    $(".book-cover").attr("src", results.imageLinks.thumbnail);
+    $(".book-title").text(results.title);
+    $(".book-description").text(results.description);
+    $(".book-rating").html(getStarsHtml(results.averageRating, true));
 
     return results;
 }
 
+// This function will ensure that our searches persist
 var displaySearchHistory = function() {
     if (localStorage.length > 0) {
        //grab stored array of searched cities from localStorage
@@ -279,7 +251,7 @@ var displaySearchHistory = function() {
        var filteredSearchedTitles = [...new Set(recentSearchedTitles)];
 
        //clear old display content
-       searchHistoryContainerEl.innerHTML = "";
+       $('.search-history-items').html("");
 
        //loop through searchedCities array to display array but...
        for (i=0; i < filteredSearchedTitles.length; i++) {
@@ -296,6 +268,20 @@ if (DEBUG) {
     searchTitle("A Clockwork Orange");
 }
 
+function saveReview() {
+
+     //load searchedTitles (an array) from localStorage and turn strings back to objects
+     var searchedTitles = JSON.parse(localStorage.getItem("searched-titles")) || [];
+     //add the individal title item to the array of searched titles
+    //  .replace("Displaying results for: ", "");
+    
+     searchedTitles.push(searchedTitleGlobal);
+     //add updated array to local storage
+     localStorage.setItem("searched-titles", JSON.stringify(searchedTitles));
+
+     displaySearchHistory();
+}
+
 // show the columns display and reposition the footer when the search button is clicked
 var showDisplay = function (){
     // reveal the columns display
@@ -310,10 +296,16 @@ var showDisplay = function (){
 displaySearchHistory();
 
 //add event listener to search history items
-searchHistoryContainerEl.addEventListener("click", buttonClickHandler)
+searchHistoryContainerEl.addEventListener("click", buttonClickHandler);
+
+//add event listener to save btn
+$(document).on({
+    "click": function () {
+        saveReview();
+}}, '#save-btn');
 
 $(".modal-close").on("click", closeModal)
 $(".modal-background").on("click", closeModal);
 
 // add event listeners to forms
-searchFormEl.addEventListener('submit', formSubmitHandler);
+$(".search-form").on('submit', formSubmitHandler);
