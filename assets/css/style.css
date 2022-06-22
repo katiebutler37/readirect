@@ -180,6 +180,7 @@ footer {
         display: block;
         text-align: center;
         height: fit-content;
+        position: relative;
     }
 
     #results {
