@@ -106,17 +106,18 @@ function searchTitle(title) {
    
         // Do stuff with real payloads in sequence
         fetchMovieData(title)
-            .then((movie_data) => {
-                finalMovieData = displayMovieResults(movie_data);
-                return finalMovieData;
-            })
-            .then((movieData) => fetchBookData(movieData.Title)
-                .then((bookData) => {
-                    finalBookData = displayBookResults(bookData);
-                    displayResultsTitle();
-                    compareResults(finalMovieData, finalBookData)
-                })                
-            )
+            .then((movieData) => {
+                finalMovieData = movieData;
+                return fetchBookData(movieData.Title)
+                    .then((bookData) => {
+                        finalBookData = bookData;
+                        displayMovieResults(finalMovieData);
+                        displayBookResults(finalBookData);
+                        displayResultsTitle();
+                        compareResults(finalMovieData, finalBookData);
+                    });
+            });
+
     }
 
 }
