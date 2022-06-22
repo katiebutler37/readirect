@@ -94,12 +94,12 @@ async function fetchBookData(title) {
 
 function searchTitle(title) {
   
-
     if (DEBUG) {
         // Do stuff with mock payloads
         displayMovieResults(moviePayload);
         displayBookResults(bookPayload);
         displayResultsTitle();
+        compareResults(moviePayload, bookPayload);
     }
     else {
 
@@ -110,38 +110,39 @@ function searchTitle(title) {
         fetchMovieData(title)
             .then((movie_data) => {
                 finalMovieData = displayMovieResults(movie_data);
-                return finalBookData;
+                return finalMovieData;
             })
-            .then((movieData) => {
-                finalBookData = fetchBookData(movieData.Title)
-                return finalBookData;
-            })
-            .then((bookData) => {
-                displayBookResults(bookData)
-                displayResultsTitle()
-                compareResults(finalMovieData, finalBookData)
-            })
+            .then((movieData) => fetchBookData(movieData.Title)
+                .then((bookData) => {
+                    finalBookData = displayBookResults(bookData);
+                    displayResultsTitle();
+                    compareResults(finalMovieData, finalBookData)
+                })                
+            )
     }
 
 }
 
-var compareResults = function(movieData, bookData){
+var compareResults = function(movieData, bookData) {
 
-    // We will highlight the movie results if their overall score is higher
-    var averageMovieRating = (movieData.Metascore / 10) / 2;
-    console.log(averageMovieRating);
-    // we will highlight the book results if their overall score is higher
-    var averageBookRating = bookData.averageRating;
-    console.log(averageBookRating);
+    var averageMovieRating = movieData.Metascore;
+    // Convert book rating to "out of 100" format
+    var averageBookRating = bookData.averageRating * 20; 
+
+    // Clear any comparison highlights currently showing
+    $("#card-1").css("box-shadow", "10px 0px 25px rgba(0, 0, 0, 0.527)")
+    $("#card-2").css("box-shadow", "10px 0px 25px rgba(0, 0, 0, 0.527)")
+
+    // Apply highlight to medium with higher rating, or both if ratings are the same 
     if (averageBookRating > averageMovieRating){
-        $("#column-1").css("background", "linear-gradient(gold, white)");
+        $("#card-1").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
     }
     if (averageMovieRating > averageBookRating){
-        $("#column-2").css("background", "linear-gradient(gold, white)");
+        $("#card-2").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
     }
     if (averageBookRating === averageMovieRating){
-        $("#column-1").css("background", "linear-gradient(green, white)");
-        $("#column-2").css("background", "linear-gradient(green, white)");
+        $("#card-1").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
+        $("#card-2").css("box-shadow", "10px 0px 25px rgba(255, 230, 2, 0.767)");
     }
 };
 
